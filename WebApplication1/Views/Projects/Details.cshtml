@@ -1,0 +1,44 @@
+﻿@model WebApplication1.Models.Project
+
+@{
+    ViewData["Title"] = "Детали проекта";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <h2>Детали проекта</h2>
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cost)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cost)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a> |
+        <a asp-action="Index">Назад</a>
+    </div>
+
+</div>

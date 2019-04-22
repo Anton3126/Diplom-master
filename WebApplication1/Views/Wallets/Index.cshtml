@@ -1,0 +1,183 @@
+﻿@model IEnumerable<WebApplication1.Models.Wallet>
+
+@{
+    ViewData["Title"] = "Кошельки";
+}
+
+<table style="width:100%;">
+    <tr>
+        <td align="left"><h2>Кошельки</h2></td>
+        <td align="right"><a style="color:#ff0000" asp-controller="Wallets" asp-action="IndexDelete"><p align="right">Удаленные</p></a></td>
+    </tr>
+</table>
+
+<h3>Фирмы</h3>
+
+<p>
+    <a asp-action="CreateWalletFirm">Добавить кошелек фирмы</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:20%;">
+                Номер кошелька
+            </th>
+            <th style="width:20%;">
+                Фирма
+            </th>
+            <th style="width:20%;">
+                Валюта
+            </th>
+            <th style="width:20%;">
+                Баланс
+            </th>
+            <th style="width:20%;">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.FirmID != null)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Balance)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a>
+                        <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a>
+                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод</a>
+                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+<h3>Сотрудники</h3>
+
+<p>
+    <a asp-action="CreateWalletUser">Добавить кошелек сотрудника</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:20%;">
+                Номер кошелька
+            </th>
+            <th style="width:20%;">
+                Сотрудник
+            </th>
+            <th style="width:20%;">
+                Валюта
+            </th>
+            <th style="width:20%;">
+                Баланс
+            </th>
+            <th style="width:20%;">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.UserId != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.FirstName)
+                        @Html.DisplayFor(modelItem => item.User.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Balance)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a>
+                        <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a>
+                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод</a>
+                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<h3>Остальные</h3>
+
+<p>
+    <a asp-action="CreateWalletOther">Добавить кошелек</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:20%;">
+                Номер кошелька
+            </th>
+            <th style="width:20%;">
+                Название кошелька
+            </th>
+            <th style="width:20%;">
+                Валюта
+            </th>
+            <th style="width:20%;">
+                Баланс
+            </th>
+            <th style="width:20%;">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.WalletName != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Balance)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a>
+                        <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a>
+                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод</a>
+                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                    </td>
+                </tr>
+             }
+         }
+    </tbody>
+</table>
+<br>
+<br>
+<h4>Количество кошельков: @Model.Count()</h4>

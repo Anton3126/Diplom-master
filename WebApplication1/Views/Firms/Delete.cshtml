@@ -1,0 +1,38 @@
+﻿@model WebApplication1.Models.Firm
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container">
+
+    <h2>Удалить</h2>
+
+    <h3>Вы уверены, что хотите удалить фирму?</h3>
+
+    <div>
+        <h4>Firm</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirmName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirmName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FirmAddress)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirmAddress)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="FirmID" />
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            <a asp-action="Index">Отмена</a>
+        </form>
+    </div>
+
+</div>

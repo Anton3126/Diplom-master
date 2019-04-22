@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebApplication1.Models.Firm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table style="width:100%;">
+    <tr>
+        <td align="left"><h2>Фирмы</h2></td>
+        <td align="right"><a style="color:#ff0000" asp-controller="Firms" asp-action="IndexDelete"><p align="right">Удаленные</p></a></td>
+    </tr>
+</table>
+
+    <p>
+        <a asp-action="Create">Добавить фирму</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:7%;">
+                    ID
+                </th>
+                <th style="width:14%;">
+                    Фирма
+                </th>
+                <th style="width:14%;">
+                    Адрес
+                </th>
+                <th style="width:14%;">
+                    Номер кошелька
+                </th>
+                <th style="width:14%;">
+                    Валюта
+                </th>
+                <th style="width:14%;">
+                    Баланс
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirmID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirmName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirmAddress)
+                    </td>
+                    <th>
+                        @foreach (var wallet in item.Wallets)
+                        {
+                            @Html.DisplayFor(walletItem => wallet.WalletID)
+                            <br>
+                        }
+                    </th>
+                    <td>
+                        @foreach (var wallet in item.Wallets)
+                        {
+
+                            @Html.DisplayFor(walletItem => wallet.Currency)
+                            <br>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var wallet in item.Wallets)
+                        {
+
+                            @Html.DisplayFor(walletItem => wallet.Balance)
+                            <br>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FirmID">Изменить</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FirmID">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <h4>Количество фирм: @Model.Count()</h4>

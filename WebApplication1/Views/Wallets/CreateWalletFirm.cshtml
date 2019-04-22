@@ -1,0 +1,34 @@
+﻿@model WebApplication1.Models.Wallet
+
+@{
+    ViewData["Title"] = "Добавить кошелек фирмы";
+}
+
+<div class="container">
+
+    <h2>Добавить кошелек фирмы</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateWalletFirm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirmID" class="control-label">Фирма</label>
+                    <select asp-for="FirmID" class="form-control" asp-items="ViewBag.Firms"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Currency" class="control-label">Валюта</label>
+                    <select asp-for="Currency" class="form-control" asp-items="ViewBag.Curryncies"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Добавить" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Отмена</a>
+    </div>
+
+</div>

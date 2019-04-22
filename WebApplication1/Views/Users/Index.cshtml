@@ -1,0 +1,122 @@
+﻿@model IEnumerable<WebApplication1.Models.User>
+
+@{
+    ViewBag.Title = "Сотрудники";
+}
+
+<table style="width:100%;">
+    <tr>
+        <td align="left"><h2>Сотрудники</h2></td>
+        <td align="right"><a style="color:#ff0000" asp-controller="Users" asp-action="IndexDelete"><p align="right">Удаленные</p></a></td>
+    </tr>
+</table>
+
+    <a asp-action="Create">Добавить сотрудника</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:8%;">
+                    ID
+                </th>
+                <th style="width:8%;">
+                    Никнейм
+                </th>
+                <th style="width:8%;">
+                    Имя
+                </th>
+                <th style="width:8%;">
+                    Отчество
+                </th>
+                <th style="width:8%;">
+                    Фамилия
+                </th>
+                <th style="width:8%;">
+                    Год рождения
+                </th>
+                <th style="width:8%;">
+                    Дата регистрации
+                </th>
+                <th style="width:8%;">
+                    Фирма
+                </th>
+                <th style="width:8%;">
+                    Номер кошелька
+                </th>
+                <th style="width:8%;">
+                    Валюта
+                </th>
+                <th style="width:8%;">
+                    Баланс
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MiddleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateImployment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                    </td>
+                    <td>
+                        @foreach (var wallet in item.Wallets)
+                        {
+
+                            @Html.DisplayFor(walletItem => wallet.WalletID)
+                            <br>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var wallet in item.Wallets)
+                        {
+
+                            @Html.DisplayFor(walletItem => wallet.Currency)
+                            <br>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var wallet in item.Wallets)
+                        {
+
+                            @Html.DisplayFor(walletItem => wallet.Balance)
+                            <br>
+                        }
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+                            <a class="btn btn-default" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                            <button type="submit" class="btn btn-default">
+                                Удалить
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <h4>Количество сотрудников: @Model.Count()</h4>
+

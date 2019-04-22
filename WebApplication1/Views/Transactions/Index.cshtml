@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WebApplication1.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Транзакции";
+}
+
+<h2>Транзакции</h2>
+
+<p>
+    <a asp-action="Create" asp-route-id=1>Перевод</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:4%;">
+                ID
+            </th>
+            <th style="width:9%;">
+                Номер кошелька
+            </th>
+            <th style="width:9%;">
+                Сумма
+            </th>
+            <th style="width:9%;">
+                Владелец кошелька
+            </th>
+            <th style="width:9%;">
+                Дата
+            </th>
+            <th style="width:9%;">
+                Комментарий
+            </th>
+            <th style="width:9%;">
+                Курс
+            </th>
+            <th style="width:9%;">
+                Тип операции
+            </th>
+            <th style="width:9%;">
+                Сумма в валюте отправителя
+            </th>
+            <th style="width:9%;">
+                Сумма в валюте получателя
+            </th>
+            <th style="width:9%;">
+                Связанная транзакция
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reverse())
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wallet.WalletID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypePM)
+                    @Html.DisplayFor(modelItem => item.Amount1)
+                </td>
+                       @if (item.Wallet.FirmID != null)
+                        {
+                             <td>
+                                 @Html.DisplayFor(modelItem => item.Wallet.Firm.FirmName) 
+                             </td>
+                        }
+                       @if (item.Wallet.UserId != null)
+                        {
+                             <td>
+                                 @Html.DisplayFor(modelItem => item.Wallet.User.FirstName)
+                                 @Html.DisplayFor(modelItem => item.Wallet.User.LastName)
+                             </td>
+                        }
+                       @if (item.Wallet.WalletName != null)
+                        {
+                             <td>
+                                 @Html.DisplayFor(modelItem => item.Wallet.WalletName) 
+                             </td>
+                        }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RelatedTransaction.TransactionID)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br>
+<br>
+<h4>Количество транзакций: @Model.Count()</h4>
+

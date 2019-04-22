@@ -1,0 +1,55 @@
+﻿@model WebApplication1.Models.Wallet
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<div class="container">
+
+    <h2>Удалить</h2>
+
+    <h3>Вы уверены, что хотите удалить кошелек?</h3>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Balance)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Balance)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Currency)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Currency)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Firm)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Firm.FirmName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.User)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.UserName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.WalletName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.WalletName)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="WalletID" />
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            <a asp-action="Index">Отмена</a>
+        </form>
+    </div>
+
+</div>

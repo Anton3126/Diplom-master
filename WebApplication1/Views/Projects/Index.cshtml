@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebApplication1.Models.Project>
+
+@{
+    ViewData["Title"] = "Проекты";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Проекты</h2>
+
+<p>
+    <a asp-action="Create">Создать проект</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Комментарий
+            </th>
+            <th>
+                Дата
+            </th>
+            <th>
+                Стоимость
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="ProjectTasks" asp-action="Index" asp-route-project="@item.Id"> @Html.DisplayFor(modelItem => item.Name) </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br>
+<br>
+<h4>Количество проектов: @Model.Count()</h4>

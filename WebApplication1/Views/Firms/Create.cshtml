@@ -1,0 +1,36 @@
+﻿@model WebApplication1.ViewModels.CreateFirmViewModel
+@{
+    ViewBag.Title = "Добавление фирмы";
+}
+<div class="container">
+
+    <h2>Добавить фирму</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" asp-controller="Firms">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirmName" class="control-label">Email</label>
+                    <input type="text" asp-for="FirmName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirmAddress" class="control-label">Имя</label>
+                    <input type="text" asp-for="FirmAddress" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Currency" class="control-label">Валюта кошелька</label>
+                    <select asp-for="Currency" class="form-control" asp-items="ViewBag.Curryncies"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Добавить" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Отмена</a>
+    </div>
+
+</div>

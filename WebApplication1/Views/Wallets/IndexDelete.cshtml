@@ -1,0 +1,152 @@
+﻿@model IEnumerable<WebApplication1.Models.Wallet>
+
+    @{
+    ViewData["Title"] = "Удаленные кошельки";
+    }
+
+<table style="width:100%;">
+    <tr>
+        <td align="left"><h2 style="color:#ff0000">Удаленные кошельки</h2></td>
+        <td align="right"><a asp-controller="Wallets" asp-action="Index"><p align="right">Назад</p></a></td>
+    </tr>
+</table>
+
+    <h3 style="color:#ff0000">Фирмы</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:20%;">
+                    Номер кошелька
+                </th>
+                <th style="width:20%;">
+                    Фирма
+                </th>
+                <th style="width:20%;">
+                    Валюта
+                </th>
+                <th style="width:20%;">
+                    Баланс
+                </th>
+                <th style="width:20%;">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            @if (item.FirmID != null)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WalletID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+            </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+    <h3 style="color:#ff0000">Cотрудники</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:20%;">
+                    Номер кошелька
+                </th>
+                <th style="width:20%;">
+                    Сотрудник
+                </th>
+                <th style="width:20%;">
+                    Валюта
+                </th>
+                <th style="width:20%;">
+                    Баланс
+                </th>
+                <th style="width:20%;">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            @if (item.UserId != null)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WalletID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                    @Html.DisplayFor(modelItem => item.User.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <h3 style="color:#ff0000">Остальные</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:20%;">
+                    Номер кошелька
+                </th>
+                <th style="width:20%;">
+                    Название кошелька
+                </th>
+                <th style="width:20%;">
+                    Валюта
+                </th>
+                <th style="width:20%;">
+                    Баланс
+                </th>
+                <th style="width:20%;">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            @if (item.WalletName != null)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WalletID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WalletName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <h4>Количество удаленных кошельков: @Model.Count()</h4>
