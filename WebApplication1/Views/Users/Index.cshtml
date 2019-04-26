@@ -17,9 +17,6 @@
         <thead>
             <tr>
                 <th style="width:8%;">
-                    ID
-                </th>
-                <th style="width:8%;">
                     Никнейм
                 </th>
                 <th style="width:8%;">
@@ -41,7 +38,7 @@
                     Фирма
                 </th>
                 <th style="width:8%;">
-                    Номер кошелька
+                    Название кошелька
                 </th>
                 <th style="width:8%;">
                     Валюта
@@ -83,7 +80,7 @@
                         @foreach (var wallet in item.Wallets)
                         {
 
-                            @Html.DisplayFor(walletItem => wallet.WalletID)
+                            @Html.DisplayFor(walletItem => wallet.WalletName)
                             <br>
                         }
                     </td>

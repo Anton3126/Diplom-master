@@ -64,7 +64,7 @@ namespace WebApplication1.Controllers
                     MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = model.DateImployment, Delete = false };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _context.SaveChangesAsync();
-                Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id };
+                Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id, WalletName = user.FirstName + " " + user.LastName + " " + model.Currency };
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 if (result.Succeeded)
