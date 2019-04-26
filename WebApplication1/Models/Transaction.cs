@@ -12,9 +12,10 @@ namespace WebApplication1.Models
         public int? RelatedTransactionID { get; set; }
         public int? WalletID { get; set; }
         public string Type { get; set; }
-        public char TypePM { get; set; }
-        public float Amount1 { get; set; }
-        public float Amount2 { get; set; }
+        public char PlusMinus { get; set; }
+        public float Amount { get; set; }
+        public float AmountInCurrencySender { get; set; }
+        public float AmountInCurrencyRecipient { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public float Course { get; set; }

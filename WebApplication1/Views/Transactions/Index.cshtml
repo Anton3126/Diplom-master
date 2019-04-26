@@ -59,8 +59,8 @@
                     @Html.DisplayFor(modelItem => item.Wallet.WalletID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TypePM)
-                    @Html.DisplayFor(modelItem => item.Amount1)
+                    @Html.DisplayFor(modelItem => item.PlusMinus)
+                    @Html.DisplayFor(modelItem => item.Amount)
                 </td>
                        @if (item.Wallet.FirmID != null)
                         {
@@ -94,10 +94,10 @@
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount1)
+                    @Html.DisplayFor(modelItem => item.AmountInCurrencySender)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount2)
+                    @Html.DisplayFor(modelItem => item.AmountInCurrencyRecipient)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RelatedTransaction.TransactionID)

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using WebApplication1.DAL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Identity.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class TasksController : Controller
     {
         private readonly SchoolContext _context;

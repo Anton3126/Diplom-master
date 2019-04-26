@@ -29,6 +29,8 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Главная</a>
             </div>
             <div class="navbar-collapse collapse">
+                @if (User.Identity.IsAuthenticated)
+                {
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Firms" asp-action="Index">Фирмы</a></li>
                     <li><a asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a></li>
@@ -38,6 +40,7 @@
                     <li><a asp-area="" asp-controller="Transactions" asp-action="Index">Транзакции</a></li>
                     <li><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
                 </ul>
+                }
                 <div class="navbar-right">
                     <table>
                         <tr>

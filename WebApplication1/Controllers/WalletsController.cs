@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class WalletsController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
@@ -55,6 +57,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                    wallet.WalletName = wallet.Firm.FirmName + " " + wallet.Currency;
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,6 +85,8 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+               var User = _context.Users.Find(wallet.UserId);
+                wallet.WalletName = User.FirstName + " " + User.LastName + " " + wallet.Currency;
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -105,6 +110,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                wallet.WalletName = wallet.WalletName + " " + wallet.Currency;
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

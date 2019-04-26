@@ -127,7 +127,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-            @if (item.WalletName != null)
+            @if (item.FirmID == null & item.UserId == null)
                 {
             <tr>
                 <td>

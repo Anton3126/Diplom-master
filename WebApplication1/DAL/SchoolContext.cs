@@ -35,18 +35,18 @@ namespace WebApplication1.DAL
             modelBuilder.Entity<Wallet>().HasData(
             new Wallet[]
             {
-                 new Wallet { WalletID = 1, WalletName = "Налоговая", Currency = "Рубль"},
-                 new Wallet { WalletID = 2, WalletName = "Арендодатель", Currency = "Рубль"},
-                 new Wallet { WalletID = 3, WalletName = "Управляющая компания(ЖКХ)", Currency = "Рубль"},
-                 new Wallet { WalletID = 4, FirmID = 1, Currency = "Рубль"},
-                 new Wallet { WalletID = 5, FirmID = 1, Currency = "Доллар"},
-                 new Wallet { WalletID = 6, FirmID = 1, Currency = "Евро"},
-                 new Wallet { WalletID = 7, FirmID = 2, Currency = "Рубль"},
-                 new Wallet { WalletID = 8, FirmID = 2, Currency = "Доллар"},
-                 new Wallet { WalletID = 9, FirmID = 2, Currency = "Евро"},
-                 new Wallet { WalletID = 10, FirmID = 3, Currency = "Рубль"},
-                 new Wallet { WalletID = 11, FirmID = 3, Currency = "Доллар"},
-                 new Wallet { WalletID = 12, FirmID = 3, Currency = "Евро"}
+                 new Wallet { WalletID = 1, WalletName = "Налоговая Рубль", Currency = "Рубль"},
+                 new Wallet { WalletID = 2, WalletName = "Арендодатель Рубль", Currency = "Рубль"},
+                 new Wallet { WalletID = 3, WalletName = "Управляющая компания(ЖКХ) Рубль", Currency = "Рубль"},
+                 new Wallet { WalletID = 4, WalletName = "ОАО Воробей Рубль", FirmID = 1, Currency = "Рубль"},
+                 new Wallet { WalletID = 5, WalletName = "ОАО Воробей Доллар", FirmID = 1, Currency = "Доллар"},
+                 new Wallet { WalletID = 6, WalletName = "ОАО Воробей Евро", FirmID = 1, Currency = "Евро"},
+                 new Wallet { WalletID = 7, WalletName = "ООО Волна Рубль", FirmID = 2, Currency = "Рубль"},
+                 new Wallet { WalletID = 8, WalletName = "ООО Волна Доллар", FirmID = 2, Currency = "Доллар"},
+                 new Wallet { WalletID = 9, WalletName = "ООО Волна Евро", FirmID = 2, Currency = "Евро"},
+                 new Wallet { WalletID = 10, WalletName = "ИП Петров Рубль", FirmID = 3, Currency = "Рубль"},
+                 new Wallet { WalletID = 11, WalletName = "ИП Петров Доллар", FirmID = 3, Currency = "Доллар"},
+                 new Wallet { WalletID = 12, WalletName = "ИП Петров Евро", FirmID = 3, Currency = "Евро"}
             });
             //Таблица Projects
             modelBuilder.Entity<Project>().HasData(

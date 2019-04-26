@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Controllers
 {
-   // [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
@@ -32,6 +32,7 @@ namespace WebApplication1.Controllers
             users = users.Where(p => p.Delete == false);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
+            
             return View(users);
         }
 

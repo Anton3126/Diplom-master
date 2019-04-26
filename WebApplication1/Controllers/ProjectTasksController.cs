@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using WebApplication1.DAL;
 using WebApplication1.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ProjectTasksController : Controller
     {
         private SchoolContext _context;

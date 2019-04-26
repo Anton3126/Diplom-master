@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class TransactionsController : Controller
     {
         private readonly List<string> types = new List<string> { "Налоги", "Аренда", "Зарплата", "Другое" };
@@ -50,23 +52,28 @@ namespace WebApplication1.Controllers
         // GET: Transactions/Create
         public IActionResult Create(int? id)
         {
-            Wallet wallet = _context.Wallet.Find(id);
-            if (wallet == null)
+            Wallet walletSender = _context.Wallet.Find(id);
+            Wallet walletRecipient = _context.Wallet.Find(id+1);
+            if (walletSender == null)
             {
                 return NotFound();
             }
             CreateTransactionViewModel model = new CreateTransactionViewModel
             {
-                WalletID = wallet.WalletID,
-                Currency = wallet.Currency
+                WalletNameSender = walletSender.WalletName,
+                WalletNameRecipient = walletRecipient.WalletName,
+                Currency = walletSender.Currency
             };
 
             IQueryable<Wallet> wallets = _context.Wallet;
             wallets = wallets.Where(p => p.Delete == false);
-            ViewBag.Wallet = new SelectList(wallets, "WalletID", "WalletID");
+            wallets = wallets.Include(p => p.Firm);
+            wallets = wallets.Include(p => p.User);
+            // ViewBag.Wallet = new SelectList(wallets, "WalletID", "WalletID");
 
             ViewData["RelatedTransactionID"] = new SelectList(_context.Transaction, "TransactionID", "TransactionID");
-            ViewData["WalletID"] = new SelectList(_context.Wallet, "WalletID", "WalletID");
+            ViewBag.WalletSender = new SelectList(wallets, "WalletName", "WalletName");
+            ViewBag.WalletRecipient = new SelectList(wallets, "WalletName", "WalletName");
 
             ViewData["Types"] = new SelectList(types);
             return View(model);
@@ -81,48 +88,50 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Transaction transaction1 = new Transaction
+                var walletSender = await _context.Wallet.FindAsync(model.WalletNameSender);
+                var walletRecipient = await _context.Wallet.FindAsync(model.WalletNameRecipient);
+                Transaction transactionSender = new Transaction
                 {
-                    WalletID = model.WalletID,
+                    WalletID = walletSender.WalletID,
                     Type = model.Type,
-                    TypePM = '-',
-                    Amount1 = model.Amount1,
-                    Amount2 = model.Amount2,
+                    PlusMinus = '-',
+                    Amount = model.AmountInCurrencySender,
+                    AmountInCurrencySender = model.AmountInCurrencySender,
+                    AmountInCurrencyRecipient = model.AmountInCurrencyRecipient,
                     Date = DateTime.Now,
                     Description = model.Description,
                     Course = model.Course
                 };
-                _context.Update(transaction1);
+                _context.Add(transactionSender);
                 await _context.SaveChangesAsync();
 
-                Transaction transaction2 = new Transaction
+                Transaction transactionRecipient = new Transaction
                 {
-                    WalletID = model.GetWalletID,
+                    WalletID = walletRecipient.WalletID,
                     Type = model.Type,
-                    TypePM = '+',
-                    Amount1 = model.Amount1,
-                    Amount2 = model.Amount2,
+                    PlusMinus = '+',
+                    Amount = model.AmountInCurrencyRecipient,
+                    AmountInCurrencySender = model.AmountInCurrencySender,
+                    AmountInCurrencyRecipient = model.AmountInCurrencyRecipient,
                     Date = DateTime.Now,
                     Description = model.Description,
                     Course = model.Course,
-                    RelatedTransactionID = transaction1.TransactionID
+                    RelatedTransactionID = transactionSender.TransactionID
                     
                 };
-                _context.Update(transaction2);
+                _context.Add(transactionRecipient);
                 await _context.SaveChangesAsync();
 
-                transaction1.RelatedTransactionID = transaction2.TransactionID;
-                _context.Update(transaction1);
+                transactionSender.RelatedTransactionID = transactionRecipient.TransactionID;
+                _context.Update(transactionSender);
                 await _context.SaveChangesAsync();
 
-                Wallet wallet1 = _context.Wallet.Find(model.WalletID);
-                wallet1.Balance = wallet1.Balance - model.Amount1;
-                _context.Update(wallet1);
+                walletSender.Balance = walletSender.Balance - model.AmountInCurrencySender;
+                _context.Update(walletSender);
                 await _context.SaveChangesAsync();
 
-                Wallet wallet2 = _context.Wallet.Find(model.GetWalletID);
-                wallet2.Balance = wallet2.Balance + (model.Amount2);
-                _context.Update(wallet2);
+                walletRecipient.Balance = walletRecipient.Balance + (model.AmountInCurrencyRecipient);
+                _context.Update(walletRecipient);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -130,7 +139,8 @@ namespace WebApplication1.Controllers
 
             IQueryable<Wallet> wallets = _context.Wallet;
             wallets = wallets.Where(p => p.Delete == false);
-            ViewBag.Wallet = new SelectList(wallets, "WalletID", "WalletID", model.WalletID);
+            ViewBag.WalletSender = new SelectList(wallets, "WalletName", "WalletNameSender", model.WalletIDSender);
+            ViewBag.WalletRecipient = new SelectList(wallets, "WalletName", "WalletNameRecipient", model.WalletIDRecipient);
 
             ViewBag.Types = new SelectList(types);
             return View(model);

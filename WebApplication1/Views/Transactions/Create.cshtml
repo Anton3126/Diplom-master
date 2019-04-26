@@ -13,24 +13,24 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="WalletID" class="control-label">Отправитель</label>
-                <select asp-for="WalletID" class="form-control" asp-items="ViewBag.Wallet"></select>
+                <label asp-for="WalletNameSender" class="control-label">Отправитель</label>
+                <select asp-for="WalletNameSender" class="form-control" asp-items="ViewBag.WalletSender"></select>
             </div>
             <div class="form-group">
-                <label asp-for="GetWalletID" class="control-label">Получатель</label>
-                <select asp-for="GetWalletID" class="form-control" asp-items="ViewBag.Wallet"></select>
+                <label asp-for="WalletNameRecipient" class="control-label">Получатель</label>
+                <select asp-for="WalletNameRecipient" class="form-control" asp-items="ViewBag.WalletRecipient"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Course" class="control-label">Курс</label>
                 <input type="text" asp-for="Course" class="form-control" id="course" />
             </div>
             <div class="form-group">
-                <label asp-for="Amount1" class="control-label">Сумма в валюте отправителя</label>
-                <input type="text" asp-for="Amount1" class="form-control" id="sender" oninput="convertTo(this)" />
+                <label asp-for="AmountInCurrencySender" class="control-label">Сумма в валюте отправителя</label>
+                <input type="text" asp-for="AmountInCurrencySender" class="form-control" id="sender" oninput="convertTo(this)" />
             </div>
             <div class="form-group">
-                <label asp-for="Amount2" class="control-label">Сумма в валюте получателя</label>
-                <input type="text" asp-for="Amount2" class="form-control" id="recipient" oninput="convertFrom(this)"/>
+                <label asp-for="AmountInCurrencyRecipient" class="control-label">Сумма в валюте получателя</label>
+                <input type="text" asp-for="AmountInCurrencyRecipient" class="form-control" id="recipient" oninput="convertFrom(this)"/>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Комментарий</label>
