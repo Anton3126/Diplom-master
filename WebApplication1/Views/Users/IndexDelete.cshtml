@@ -15,9 +15,6 @@
     <thead>
         <tr>
             <th style="width:8%;">
-                ID
-            </th>
-            <th style="width:8%;">
                 Никнейм
             </th>
             <th style="width:8%;">
@@ -38,8 +35,8 @@
             <th style="width:8%;">
                 Фирма
             </th>
-            <th style="width:8%;">
-                Номер кошелька
+            <th style="width:12%;">
+                Название кошелька
             </th>
             <th style="width:8%;">
                 Валюта
@@ -53,9 +50,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
@@ -77,30 +71,30 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Firm.FirmName)
                 </td>
-                <td>
+                <td><nobr>
                     @foreach (var wallet in item.Wallets)
                     {
 
-                        @Html.DisplayFor(walletItem => wallet.WalletID)
+                        @Html.DisplayFor(walletItem => wallet.WalletName)
                         <br>
                     }
-                </td>
-                <td>
+                </nobr></td>
+                <td><nobr>
                     @foreach (var wallet in item.Wallets)
                     {
 
                         @Html.DisplayFor(walletItem => wallet.Currency)
                         <br>
                     }
-                </td>
-                <td>
+                </nobr></td>
+                <td><nobr>
                     @foreach (var wallet in item.Wallets)
                     {
 
                         @Html.DisplayFor(walletItem => wallet.Balance)
                         <br>
                     }
-                </td>
+                </nobr></td>
             </tr>
         }
 

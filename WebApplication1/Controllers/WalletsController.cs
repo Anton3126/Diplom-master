@@ -57,7 +57,14 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                    wallet.WalletName = wallet.Firm.FirmName + " " + wallet.Currency;
+                var firm = _context.Firm.Find(wallet.FirmID);
+                wallet.WalletName = firm.FirmName + " " + wallet.Currency;
+                int i = 2;
+                while (_context.Wallet.FirstOrDefault(e => e.WalletName == wallet.WalletName) != null)
+                {
+                    wallet.WalletName = firm.FirmName + " " + wallet.Currency + " " + i;
+                    i = i + 1;
+                }
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -87,6 +94,12 @@ namespace WebApplication1.Controllers
             {
                var User = _context.Users.Find(wallet.UserId);
                 wallet.WalletName = User.FirstName + " " + User.LastName + " " + wallet.Currency;
+                int i = 2;
+                while (_context.Wallet.FirstOrDefault(e => e.WalletName == wallet.WalletName) != null)
+                {
+                    wallet.WalletName = User.FirstName + " " + User.LastName + " " + wallet.Currency + " " + i;
+                    i = i + 1;
+                }
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -110,7 +123,14 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 wallet.WalletName = wallet.WalletName + " " + wallet.Currency;
+                int i = 2;
+                while (_context.Wallet.FirstOrDefault(e => e.WalletName == wallet.WalletName) != null)
+                {
+                    wallet.WalletName = wallet.WalletName + " " + wallet.Currency + " " + i;
+                    i = i + 1;
+                }
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

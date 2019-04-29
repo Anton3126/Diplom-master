@@ -13,12 +13,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="WalletNameSender" class="control-label">Отправитель</label>
-                <select asp-for="WalletNameSender" class="form-control" asp-items="ViewBag.WalletSender"></select>
+                <label asp-for="WalletIDSender" class="control-label">Отправитель</label>
+                <select asp-for="WalletIDSender" class="form-control" asp-items="ViewBag.WalletSender"></select>
             </div>
             <div class="form-group">
-                <label asp-for="WalletNameRecipient" class="control-label">Получатель</label>
-                <select asp-for="WalletNameRecipient" class="form-control" asp-items="ViewBag.WalletRecipient"></select>
+                <label asp-for="WalletIDRecipient" class="control-label">Получатель</label>
+                <select asp-for="WalletIDRecipient" class="form-control" asp-items="ViewBag.WalletRecipient"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Course" class="control-label">Курс</label>
