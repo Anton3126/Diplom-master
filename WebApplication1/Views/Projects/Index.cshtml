@@ -11,11 +11,23 @@
     <a asp-action="Create">Создать проект</a>
 </p>
 
+<form method="get">
+    <div class="form-inline form-group">        
+        <label class="control-label">Статус: </label>
+        @Html.DropDownList("status", ViewBag.Status as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                Название
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">
+                    Название
+                </a>                
             </th>
             <th>
                 Комментарий
@@ -24,33 +36,40 @@
                 Дата
             </th>
             <th>
-                Стоимость
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CostSort">
+                    Стоимость
+                </a>
             </th>
-            <th></th>
+            <th>
+                Статус
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-controller="ProjectTasks" asp-action="Index" asp-route-project="@item.Id"> @Html.DisplayFor(modelItem => item.Name) </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cost)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a asp-controller="ProjectTasks" asp-action="Index" asp-route-project="@item.Id"> @Html.DisplayFor(modelItem => item.Name) </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

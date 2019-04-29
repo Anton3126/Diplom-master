@@ -17,9 +17,6 @@
         <thead>
             <tr>
                 <th style="width:8%;">
-                    ID
-                </th>
-                <th style="width:8%;">
                     Никнейм
                 </th>
                 <th style="width:8%;">
@@ -55,9 +52,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>

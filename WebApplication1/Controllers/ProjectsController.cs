@@ -14,6 +14,7 @@ namespace WebApplication1.Controllers
     [Authorize(Roles = "admin")]
     public class ProjectsController : Controller
     {
+        List<String> statusList = new List<string>() {"Все", "Активный", "Завершенный" };
         private readonly SchoolContext _context;
 
         public ProjectsController(SchoolContext context)
@@ -22,9 +23,41 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( string status, SortState sortOrder = SortState.NameAsc)
         {
-            return View(await _context.Projects.ToListAsync());
+            IQueryable<Project> projects = _context.Projects;
+
+            if (status == "Все")
+            {
+                projects = projects.Where(p => p.Status != null);
+            }
+            else if (status != null && status != "")
+            {
+                projects = projects.Where(p => p.Status == status);
+            }
+
+            ViewData["Status"] = statusList.Select(m => new SelectListItem { Text = m, Value = m });
+
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewData["CostSort"] = sortOrder == SortState.CostAsc ? SortState.CostDesc : SortState.CostAsc;
+
+            switch (sortOrder)
+            {
+                case SortState.NameDesc:
+                    projects = projects.OrderByDescending(s => s.Name);
+                    break;
+                case SortState.CostAsc:
+                    projects = projects.OrderBy(s => s.Cost);
+                    break;
+                case SortState.CostDesc:
+                    projects = projects.OrderByDescending(s => s.Cost);
+                    break;
+                default:
+                    projects = projects.OrderBy(s => s.Name);
+                    break;
+            }
+
+            return View(await projects.AsNoTracking().ToListAsync());
         }
 
         // GET: Projects/Details/5
@@ -58,6 +91,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Date,Cost")] Project project)
         {
+            project.Status = "Активный";
             if (ModelState.IsValid)
             {
                 _context.Add(project);
@@ -79,7 +113,10 @@ namespace WebApplication1.Controllers
             if (project == null)
             {
                 return NotFound();
-            }
+            }           
+
+            ViewData["Status"] = statusList.Select(m => new SelectListItem { Text = m, Value = m});
+
             return View(project);
         }
 

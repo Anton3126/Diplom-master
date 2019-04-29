@@ -52,12 +52,14 @@ namespace WebApplication1.DAL
             modelBuilder.Entity<Project>().HasData(
            new Project[]
            {
-                new Project { Id=1, Name="Проект 1", Description="АИС управления персоналом",
-                            Date = new DateTime(2008, 5, 1, 10, 40, 52), Cost = 90000},
-                new Project { Id=2, Name="Проект 3", Description="АИС управления финансами",
-                           Date = new DateTime(2008, 10, 10, 7, 30, 52), Cost = 90000},
-                new Project { Id=3, Name="Проект 2", Description="АИС управления call-центром",
-                            Date = new DateTime(2009, 11, 3, 8, 35, 52), Cost = 90000}
+                new Project { Id=1, Name="GLOBUS", Description="АИС управления персоналом",
+                            Date = new DateTime(2008, 5, 1, 10, 40, 52), Cost = 100000, Status = "Активный"},
+                new Project { Id=2, Name="Электронный инспектор", Description="АИС управления финансами",
+                           Date = new DateTime(2008, 10, 10, 7, 30, 52), Cost = 50000, Status = "Активный"},
+                new Project { Id=3, Name="Единое окно", Description="АИС управления call-центром",
+                            Date = new DateTime(2009, 11, 3, 8, 35, 52), Cost = 93000, Status = "Активный"},
+                new Project { Id=4, Name="Онлайн трекер", Description="Веб-приложения для отслеживания почтовых посылок",
+                            Date = new DateTime(2009, 11, 3, 8, 35, 52), Cost = 85000, Status = "Завершенный"}
            });
 
             //Таблица Task
