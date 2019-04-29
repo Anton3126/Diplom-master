@@ -9,6 +9,11 @@
 <p>
     <a asp-action="Create" asp-route-id=1>Перевод</a>
 </p>
+
+<p>
+    <a asp-action="CreateOneSideTransaction" asp-route-id=1>Добавить транзакцию</a>
+</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -16,13 +21,13 @@
                 ID
             </th>
             <th style="width:9%;">
-                Номер кошелька
-            </th>
-            <th style="width:9%;">
                 Сумма
             </th>
             <th style="width:9%;">
-                Владелец кошелька
+                Имя кошелька
+            </th>
+            <th style="width:9%;">
+                Номер кошелька
             </th>
             <th style="width:9%;">
                 Дата
@@ -45,7 +50,6 @@
             <th style="width:9%;">
                 Связанная транзакция
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -56,31 +60,15 @@
                     @Html.DisplayFor(modelItem => item.TransactionID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Wallet.WalletID)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.PlusMinus)
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
-                       @if (item.Wallet.FirmID != null)
-                        {
-                             <td>
-                                 @Html.DisplayFor(modelItem => item.Wallet.Firm.FirmName) 
-                             </td>
-                        }
-                       @if (item.Wallet.UserId != null)
-                        {
-                             <td>
-                                 @Html.DisplayFor(modelItem => item.Wallet.User.FirstName)
-                                 @Html.DisplayFor(modelItem => item.Wallet.User.LastName)
-                             </td>
-                        }
-                       @if (item.Wallet.WalletName != null)
-                        {
-                             <td>
-                                 @Html.DisplayFor(modelItem => item.Wallet.WalletName) 
-                             </td>
-                        }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wallet.WalletName) 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wallet.WalletID)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>

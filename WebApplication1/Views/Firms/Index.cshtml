@@ -17,9 +17,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th style="width:7%;">
-                    ID
-                </th>
                 <th style="width:14%;">
                     Фирма
                 </th>
@@ -27,7 +24,7 @@
                     Адрес
                 </th>
                 <th style="width:14%;">
-                    Номер кошелька
+                    Название кошелька
                 </th>
                 <th style="width:14%;">
                     Валюта
@@ -43,9 +40,6 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirmID)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.FirmName)
                     </td>
                     <td>
@@ -54,7 +48,7 @@
                     <th>
                         @foreach (var wallet in item.Wallets)
                         {
-                            @Html.DisplayFor(walletItem => wallet.WalletID)
+                            @Html.DisplayFor(walletItem => wallet.WalletName)
                             <br>
                         }
                     </th>

@@ -1,0 +1,37 @@
+﻿@model WebApplication1.ViewModels.CreateTransactionViewModel
+@{
+    ViewData["Title"] = "Транзакция";
+}
+<div class="container">
+    <h2>Добавить транзакцию</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateOneSideTransaction">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SenderRecipient" class="control-label">Отправитель или получатель</label>
+                    <select asp-for="SenderRecipient" class="form-control" asp-items="ViewBag.SenderRecipient"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WalletID" class="control-label">Кошелек</label>
+                    <select asp-for="WalletID" class="form-control" asp-items="ViewBag.WalletName"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label">Сумма</label>
+                    <input type="text" asp-for="Amount" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Комментарий</label>
+                    <input type="text" asp-for="Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label">Тип</label>
+                    <select asp-for="Type" class="form-control" asp-items="ViewBag.Types"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Добавить" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

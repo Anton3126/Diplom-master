@@ -26,14 +26,25 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             IQueryable<User> users = _userManager.Users;
             users = users.Where(p => p.Delete == false);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
-            
-            return View(users);
+            var userList = users.ToList();
+            foreach (User user in userList.ToList())
+            {
+                foreach (Wallet wallet in user.Wallets.ToList())
+                {
+                    if (wallet.Delete == true)
+                    {
+                        user.Wallets.Remove(wallet);
+                    }
+                    var result = await _userManager.UpdateAsync(user);
+                }
+            }
+            return View(userList);
         }
 
         public IActionResult IndexDelete()
@@ -64,7 +75,7 @@ namespace WebApplication1.Controllers
                     MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = model.DateImployment, Delete = false };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _context.SaveChangesAsync();
-                Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id };
+                Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id, WalletName = user.FirstName + " " + user.LastName + " " + model.Currency };
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 if (result.Succeeded)

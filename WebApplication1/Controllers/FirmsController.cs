@@ -79,7 +79,8 @@ namespace WebApplication1.Controllers
                 };
                 _context.Add(firm);
                 await _context.SaveChangesAsync();
-                Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, FirmID = firm.FirmID };
+                Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, FirmID = firm.FirmID, WalletName = firm.FirmName + " " + model.Currency
+            };
                 _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
