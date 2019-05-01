@@ -9,13 +9,14 @@ using WebApplication1.Models;
 using WebApplication1.DAL;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace Identity.Controllers
 {
     [Authorize(Roles = "admin")]
     public class TasksController : Controller
     {
         private readonly SchoolContext _context;
-
+        
         public TasksController(SchoolContext context)
         {
             _context = context;
@@ -24,7 +25,7 @@ namespace Identity.Controllers
         // GET: Tasks
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.Tasks.Include(t => t.Project);
+            var applicationContext = _context.Tasks.Include(t => t.Project);            
             return View(await applicationContext.ToListAsync());
         }
 
@@ -37,6 +38,7 @@ namespace Identity.Controllers
             }
 
             var task = await _context.Tasks
+                .Include(t => t.User)
                 .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (task == null)
@@ -50,7 +52,8 @@ namespace Identity.Controllers
         // GET: Tasks/Create
         public IActionResult Create()
         {
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
             return View();
         }
 
@@ -59,15 +62,16 @@ namespace Identity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Date,ProjectId")] WebApplication1.Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,UserId,Date,ProjectId")] WebApplication1.Models.Task task)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 _context.Add(task);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("/ProjectTasks/Index");
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", task.UserId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", task.ProjectId);
             return View(task);
         }
 
@@ -84,7 +88,8 @@ namespace Identity.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", task.UserId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", task.ProjectId);
             return View(task);
         }
 
@@ -93,7 +98,7 @@ namespace Identity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Date,ProjectId")] WebApplication1.Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UserId,Date,ProjectId")] WebApplication1.Models.Task task)
         {
             if (id != task.Id)
             {
@@ -101,7 +106,7 @@ namespace Identity.Controllers
             }
 
             if (ModelState.IsValid)
-            {
+            { 
                 try
                 {
                     _context.Update(task);
@@ -118,9 +123,11 @@ namespace Identity.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect("/ProjectTasks/Index");
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", task.UserId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", task.ProjectId);
             return View(task);
         }
 
@@ -133,6 +140,7 @@ namespace Identity.Controllers
             }
 
             var task = await _context.Tasks
+                .Include(t => t.User)
                 .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (task == null)
@@ -151,7 +159,7 @@ namespace Identity.Controllers
             var task = await _context.Tasks.FindAsync(id);
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Redirect("/ProjectTasks/Index");
         }
 
         private bool TaskExists(int id)

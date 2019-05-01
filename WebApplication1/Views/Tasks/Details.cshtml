@@ -23,6 +23,19 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
+            Исполнитель
+        </dt>
+        <dd>
+            @if (Model.UserId == null)
+            {
+                @:Не назначен
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.User.UserName)
+            }
+        </dd>
+        <dt>
             Дата
         </dt>
         <dd>
@@ -32,7 +45,7 @@
             Проект
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Project.Id)
+            @Html.DisplayFor(model => model.Project.Name)
         </dd>
     </dl>
 </div>

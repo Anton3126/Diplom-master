@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             {
                 tasks = tasks.Where(p => p.ProjectId == project);
             }
-
+            List<User> users = _context.Users.ToList();
             List<Project> projects = _context.Projects.ToList();
             projects.Insert(0, new Project { Name = "Все", Id = 0 });
 
