@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IQueryable<User> users = _userManager.Users;
             users = users.Where(p => p.Delete == false);
@@ -41,7 +41,6 @@ namespace WebApplication1.Controllers
                     {
                         user.Wallets.Remove(wallet);
                     }
-                    var result = await _userManager.UpdateAsync(user);
                 }
             }
             return View(userList);
@@ -53,7 +52,36 @@ namespace WebApplication1.Controllers
             users = users.Where(p => p.Delete == true);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
-            return View(users);
+            var userList = users.ToList();
+            foreach (User user in userList.ToList())
+            {
+                foreach (Wallet wallet in user.Wallets.ToList())
+                {
+                    if (wallet.Delete == true)
+                    {
+                        user.Wallets.Remove(wallet);
+                    }
+                }
+            }
+            return View(userList);
+        }
+
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Firm = _context.Firm.Find(user.FirmID);
+            return View(user);
         }
 
         public IActionResult Create()
@@ -160,8 +188,27 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .Include(w => w.Firm)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user != null)
@@ -170,6 +217,17 @@ namespace WebApplication1.Controllers
                 IdentityResult result = await _userManager.UpdateAsync(user);
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Undelete(string id)
+        {
+            User user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                user.Delete = false;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+            }
+            return RedirectToAction("IndexDelete");
         }
     }
 }

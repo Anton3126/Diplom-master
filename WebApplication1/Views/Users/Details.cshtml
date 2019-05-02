@@ -1,0 +1,52 @@
+﻿@model WebApplication1.Models.User
+@{
+    ViewData["Title"] = "Детали сотрудника";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>Детали сотрудника</h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Имя
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt>
+                Отчество
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MiddleName)
+            </dd>
+            <dt>
+                Фамилия
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt>
+                Фирма
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Firm.FirmName)
+            </dd>
+            <dt>
+                Год рождения
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Year)
+            </dd>
+            <dt>
+                Дата регистрации
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateImployment)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a> |
+        <a asp-action="Index">Назад</a>
+    </div>
+</div>

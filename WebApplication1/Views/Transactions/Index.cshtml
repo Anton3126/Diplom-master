@@ -7,11 +7,11 @@
 <h2>Транзакции</h2>
 
 <p>
-    <a asp-action="Create" asp-route-id=1>Перевод</a>
+    <a asp-action="Create" asp-route-id=1>Перевод между кошельками</a>
 </p>
 
 <p>
-    <a asp-action="CreateOneSideTransaction" asp-route-id=1>Добавить транзакцию</a>
+    <a asp-action="CreateOneSideTransaction" asp-route-id=1>Одиночный перевод</a>
 </p>
 
 <table class="table">
@@ -64,7 +64,9 @@
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Wallet.WalletName) 
+                    <a asp-controller="Transactions" asp-route-id="@item.Wallet.WalletID" asp-action="IndexIndividual">
+                        @Html.DisplayFor(modelItem => item.Wallet.WalletName)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Wallet.WalletID)

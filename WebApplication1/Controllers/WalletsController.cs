@@ -42,6 +42,26 @@ namespace WebApplication1.Controllers
             return View(await wallets.ToListAsync());
         }
 
+        // GET: Wallets/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var wallet = await _context.Wallet
+                .FirstOrDefaultAsync(m => m.WalletID == id);
+            if (wallet == null)
+            {
+                return NotFound();
+            }
+            wallet.Firm = _context.Firm.Find(wallet.FirmID);
+            wallet.User = _context.Users.Find(wallet.UserId);
+
+            return View(wallet);
+        }
+
         public IActionResult CreateWalletFirm()
         {
             IQueryable<Firm> firms = _context.Firm;
@@ -228,6 +248,15 @@ namespace WebApplication1.Controllers
             _context.Wallet.Update(wallet);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Undelete(int id)
+        {
+            var wallet = await _context.Wallet.FindAsync(id);
+            wallet.Delete = false;
+            _context.Wallet.Update(wallet);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexDelete));
         }
 
         private bool WalletExists(int id)

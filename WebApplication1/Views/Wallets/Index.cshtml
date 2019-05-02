@@ -21,7 +21,7 @@
     <thead>
         <tr>
             <th style="width:20%;">
-                Номер кошелька
+                Название кошелька
             </th>
             <th style="width:20%;">
                 Фирма
@@ -44,7 +44,7 @@
 
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletID)
+                        @Html.DisplayFor(modelItem => item.WalletName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Firm.FirmName)
@@ -56,10 +56,19 @@
                         @Html.DisplayFor(modelItem => item.Balance)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a>
-                        <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a>
-                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод</a>
-                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Действия
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a><br>
+                                    <a asp-action="Details" asp-route-id="@item.WalletID">Детали</a><br>
+                                    <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a><br>
+                                    <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a><br>
+                                    <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="CreateOneSideTransaction">Одиночный перевод</a><br>
+                                    <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                                </div>
+                            </div>
                     </td>
                 </tr>
             }
@@ -78,7 +87,7 @@
     <thead>
         <tr>
             <th style="width:20%;">
-                Номер кошелька
+                Название кошелька
             </th>
             <th style="width:20%;">
                 Сотрудник
@@ -100,7 +109,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletID)
+                        @Html.DisplayFor(modelItem => item.WalletName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.User.FirstName)
@@ -113,10 +122,19 @@
                         @Html.DisplayFor(modelItem => item.Balance)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a>
-                        <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a>
-                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод</a>
-                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Действия
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a><br>
+                                <a asp-action="Details" asp-route-id="@item.WalletID">Детали</a><br>
+                                <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Одиночный перевод</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             }
@@ -134,18 +152,15 @@
     <thead>
         <tr>
             <th style="width:20%;">
-                Номер кошелька
+                Название кошелька
             </th>
             <th style="width:20%;">
-                Название кошелька
             </th>
             <th style="width:20%;">
                 Валюта
             </th>
             <th style="width:20%;">
                 Баланс
-            </th>
-            <th style="width:20%;">
             </th>
         </tr>
     </thead>
@@ -156,10 +171,9 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletID)
+                        @Html.DisplayFor(modelItem => item.WalletName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Currency)
@@ -168,10 +182,19 @@
                         @Html.DisplayFor(modelItem => item.Balance)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a>
-                        <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a>
-                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод</a>
-                        <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Действия
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a><br>
+                                <a asp-action="Details" asp-route-id="@item.WalletID">Детали</a><br>
+                                <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Одиночный перевод</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
              }

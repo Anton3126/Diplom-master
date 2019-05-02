@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
     public class TransactionsController : Controller
     {
         private readonly List<string> types = new List<string> { "Налоги", "Аренда", "Зарплата", "Другое" };
-        private readonly List<string> senderrecipient = new List<string> { "Отправитель", "Получатель" };
+        private readonly List<string> senderrecipient = new List<string> { "Получатель", "Отправитель" };
         private readonly SchoolContext _context;
 
         public TransactionsController(SchoolContext context)
@@ -127,14 +127,14 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
-        public IActionResult CreateOneSideTransaction()
+        public IActionResult CreateOneSideTransaction(int? id)
         {
             IQueryable<Wallet> wallets = _context.Wallet;
             wallets = wallets.Where(p => p.Delete == false);
             wallets = wallets.Include(p => p.Firm);
             wallets = wallets.Include(p => p.User);
 
-            ViewBag.WalletName = new SelectList(wallets, "WalletID", "WalletName");
+            ViewBag.WalletName = new SelectList(wallets, "WalletID", "WalletName", id);
 
             ViewData["Types"] = new SelectList(types);
 

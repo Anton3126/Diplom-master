@@ -1,0 +1,47 @@
+﻿@model WebApplication1.Models.Wallet
+@{
+    ViewData["Title"] = "Детали кошелька";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>Детали кошелька</h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Название кошелька
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.WalletName)
+            </dd>
+            <dt>
+                Валюта
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Currency)
+            </dd>
+            <dt>
+                Баланс
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Balance)
+            </dd>
+            <dt>
+                Фирма
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Firm.FirmName)
+            </dd>
+            <dt>
+                Cотрудник
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.FirstName)
+                @Html.DisplayFor(model => model.User.LastName)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.WalletID">Изменить</a> |
+        <a asp-action="Index">Назад</a>
+    </div>
+</div>

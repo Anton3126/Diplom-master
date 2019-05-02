@@ -71,6 +71,13 @@
                         <br>
                     }
                 </td>
+                <td>
+                    <form asp-action="Undelete" asp-route-id="@item.FirmID" method="post">
+                        <button type="submit" class="btn btn-sm btn-success">
+                            Восстановить
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

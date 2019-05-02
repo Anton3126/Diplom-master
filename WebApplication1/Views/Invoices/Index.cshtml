@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebApplication1.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaitDatePayment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountWait)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountReal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePaymentWait)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePaymentReal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delete)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WaitDatePayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountWait)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountReal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePaymentWait)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePaymentReal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delete)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InvoiceID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InvoiceID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InvoiceID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
