@@ -8,14 +8,13 @@ namespace WebApplication1.Models
     public class Invoice
     {
         public int InvoiceID { get; set; }
-        public DateTime DateCreate { get; set; }
-        public DateTime WaitDatePayment { get; set; }
-        public int Amount { get; set; }
         public string ClientName { get; set; }
-        public int AmountWait { get; set; }
-        public int AmountReal { get; set; }
-        public DateTime DatePaymentWait { get; set; }
-        public DateTime DatePaymentReal { get; set; }
+        public DateTime DateCreate { get; set; }
+        public float? AmountWait { get; set; }
+        public float? AmountReal { get; set; }
+        public DateTime? DatePaymentWait { get; set; }
+        public DateTime? DatePaymentReal { get; set; }
+        public string Description { get; set; }
 
         public int ProjectID { get; set; }
         public Project Project { get; set; }

@@ -1,19 +1,15 @@
 ﻿@model IEnumerable<WebApplication1.Models.Invoice>
 
 @{
-    ViewData["Title"] = "Инвойсы";
+    ViewData["Title"] = "Удаленные нвойсы";
 }
 
 <table style="width:100%;">
     <tr>
-        <td align="left"><h2>Инвойсы</h2></td>
-        <td align="right"><a style="color:#ff0000" asp-controller="Invoices" asp-action="IndexDelete"><p align="right">Удаленные</p></a></td>
+        <td align="left"><h2 style="color:#ff0000">Удаленные инвойсы</h2></td>
+        <td align="right"><a asp-controller="Invoices" asp-action="Index"><p align="right">Назад</p></a></td>
     </tr>
 </table>
-
-<p>
-    <a asp-action="Create">Добавить инвойс</a>
-</p>
 
 <table class="table">
     <thead>
@@ -73,9 +69,11 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.InvoiceID">Изменить</a> |
-                    <a asp-action="Details" asp-route-id="@item.InvoiceID">Детали</a> |
-                    <a asp-action="Delete" asp-route-id="@item.InvoiceID">Удалить</a>
+                    <form asp-action="Undelete" asp-route-id="@item.InvoiceID" method="post">
+                        <button type="submit" class="btn btn-success">
+                            Восстановить
+                        </button>
+                    </form>
                 </td>
             </tr>
         }
@@ -84,4 +82,4 @@
 
 <br>
 <br>
-<h4>Количество инвойсов: @Model.Count()</h4>
+<h4>Количество удаленных инвойсов: @Model.Count()</h4>

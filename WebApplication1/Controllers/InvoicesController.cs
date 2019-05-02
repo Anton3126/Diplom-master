@@ -20,10 +20,20 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Invoices
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var schoolContext = _context.Invoice.Include(i => i.Project);
-            return View(await schoolContext.ToListAsync());
+            IQueryable<Invoice> invoices = _context.Invoice;
+            invoices = invoices.Where(p => p.Delete == false);
+            invoices = invoices.Include(p => p.Project);
+            return View(invoices);
+        }
+
+        public IActionResult IndexDelete()
+        {
+            IQueryable<Invoice> invoices = _context.Invoice;
+            invoices = invoices.Where(p => p.Delete == true);
+            invoices = invoices.Include(p => p.Project);
+            return View(invoices);
         }
 
         // GET: Invoices/Details/5
@@ -48,7 +58,7 @@ namespace WebApplication1.Controllers
         // GET: Invoices/Create
         public IActionResult Create()
         {
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Id");
+            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Name");
             return View();
         }
 
@@ -57,15 +67,16 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InvoiceID,DateCreate,WaitDatePayment,Amount,ClientName,AmountWait,AmountReal,DatePaymentWait,DatePaymentReal,ProjectID,Delete")] Invoice invoice)
+        public async Task<IActionResult> Create([Bind("InvoiceID,ClientName,DateCreate,AmountWait,AmountReal,DatePaymentWait,DatePaymentReal,Description,ProjectID,Delete")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
+                invoice.DateCreate = DateTime.Now;
                 _context.Add(invoice);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Id", invoice.ProjectID);
+            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Name", invoice.ProjectID);
             return View(invoice);
         }
 
@@ -82,7 +93,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Id", invoice.ProjectID);
+            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Name", invoice.ProjectID);
             return View(invoice);
         }
 
@@ -91,7 +102,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("InvoiceID,DateCreate,WaitDatePayment,Amount,ClientName,AmountWait,AmountReal,DatePaymentWait,DatePaymentReal,ProjectID,Delete")] Invoice invoice)
+        public async Task<IActionResult> Edit(int id, [Bind("InvoiceID,ClientName,DateCreate,AmountWait,AmountReal,DatePaymentWait,DatePaymentReal,Description,ProjectID,Delete")] Invoice invoice)
         {
             if (id != invoice.InvoiceID)
             {
@@ -147,9 +158,19 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var invoice = await _context.Invoice.FindAsync(id);
-            _context.Invoice.Remove(invoice);
+            invoice.Delete = true;
+            _context.Invoice.Update(invoice);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Undelete(int id)
+        {
+            var invoice = await _context.Invoice.FindAsync(id);
+            invoice.Delete = false;
+            _context.Invoice.Update(invoice);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexDelete));
         }
 
         private bool InvoiceExists(int id)
