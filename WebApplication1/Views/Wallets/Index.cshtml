@@ -131,7 +131,7 @@
                                 <a asp-action="Details" asp-route-id="@item.WalletID">Детали</a><br>
                                 <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a><br>
                                 <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a><br>
-                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Одиночный перевод</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="CreateOneSideTransaction">Одиночный перевод</a><br>
                                 <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                                 <a asp-action="Details" asp-route-id="@item.WalletID">Детали</a><br>
                                 <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a><br>
                                 <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a><br>
-                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Одиночный перевод</a><br>
+                                <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="CreateOneSideTransaction">Одиночный перевод</a><br>
                                 <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
                             </div>
                         </div>

@@ -1,0 +1,48 @@
+﻿@model WebApplication1.ViewModels.ProjectTasksViewModel
+@{
+    ViewData["Title"] = "Каталог задач";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Каталог задач</h2>
+
+<form method="get">
+    <div class="form-inline form-group">
+        <label class="control-label">Проект: </label>
+        @Html.DropDownList("project", Model.Projects as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+<table class="table table-striped">
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Дата создания</th>
+        <th>Проект</th>
+        <th>Выполняет</th>
+    </tr>
+    @foreach (var item in Model.Tasks)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+                @Html.DisplayFor(modelItem => item.User.LastName)
+            </td>
+        </tr>
+    }
+</table>
+<br>
+<br>
+<h4>Количество задач: @Model.Tasks.Count()</h4>

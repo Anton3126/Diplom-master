@@ -52,6 +52,10 @@ namespace WebApplication1.Controllers
                     {
                         user.Tasks.Remove(task);
                     }
+                    else
+                    {
+                        task.Project = _context.Projects.Find(task.ProjectId);
+                    }
                 }
             }
             return View(userList);
@@ -71,6 +75,20 @@ namespace WebApplication1.Controllers
                     if (wallet.Delete == true)
                     {
                         user.Wallets.Remove(wallet);
+                    }
+                }
+            }
+            foreach (User user in userList.ToList())
+            {
+                foreach (Models.Task task in user.Tasks.ToList())
+                {
+                    if (task.Delete == true)
+                    {
+                        user.Tasks.Remove(task);
+                    }
+                    else
+                    {
+                        task.Project = _context.Projects.Find(task.ProjectId);
                     }
                 }
             }

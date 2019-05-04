@@ -113,7 +113,7 @@ namespace Identity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Date,ProjectId")] WebApplication1.Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Date,ProjectId,UserId")] WebApplication1.Models.Task task)
         {
             if (id != task.Id)
             {

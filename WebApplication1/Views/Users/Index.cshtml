@@ -49,71 +49,93 @@
                 <th style="width:7%;">
                     Задачи
                 </th>
+                <th style="width:7%;">
+                    Проекты
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MiddleName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Year)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateImployment)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Firm.FirmName)
-                    </td>
-                    <td><nobr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateImployment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
 
                             @Html.DisplayFor(walletItem => wallet.WalletName)
                             <br>
                         }
-                    </nobr></td>
-                    <td><nobr>
+                    </nobr>
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
 
                             @Html.DisplayFor(walletItem => wallet.Currency)
                             <br>
                         }
-                    </nobr></td>
-                    <td><nobr>
+                    </nobr>
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
 
                             @Html.DisplayFor(walletItem => wallet.Balance)
                             <br>
                         }
-                   </nobr> </td>
-                    <td>
+                    </nobr>
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var task in item.Tasks)
                         {
 
                             @Html.DisplayFor(taskItem => task.Name)
                             <br>
                         }
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-                    </td>
-                </tr>
+                    </nobr>
+                    
+                </td>
+                <td>
+                    <nobr>
+                        @foreach (var task in item.Tasks)
+                        {
+
+                            @Html.DisplayFor(taskItem => task.Project.Name)
+                            <br>
+                        }
+                    </nobr>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
             }
 
         </tbody>

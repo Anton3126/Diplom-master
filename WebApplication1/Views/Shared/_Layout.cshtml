@@ -42,6 +42,14 @@
                         <li><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
                     </ul>
                 }
+                @if (User.IsInRole("user"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="SotrudnikTransactions" asp-action="Index">Транзакции</a></li>
+                        <li><a asp-area="" asp-controller="SotrudnikProjectTasks" asp-action="Index">Задачи</a></li>
+                        <li><a asp-area="" asp-controller="SotrudnikProjects" asp-action="Index">Проекты</a></li>
+                    </ul>
+                }
                 <div class="navbar-right">
                     <table>
                         <tr>
