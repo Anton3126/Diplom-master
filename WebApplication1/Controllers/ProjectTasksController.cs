@@ -24,6 +24,31 @@ namespace WebApplication1.Controllers
         public IActionResult Index(int? project)
         {
             IQueryable<Models.Task> tasks = _context.Tasks.Include(p => p.Project);
+            tasks = tasks.Where(e => e.Delete == false);
+            tasks = tasks.Include(e => e.User);
+            //Вытягиваем все задачи по выбранному проекту
+            if (project != null && project != 0)
+            {
+                tasks = tasks.Where(p => p.ProjectId == project);
+            }
+
+            List<Project> projects = _context.Projects.ToList();
+            projects.Insert(0, new Project { Name = "Все", Id = 0 });
+
+            ProjectTasksViewModel viewModel = new ProjectTasksViewModel
+            {
+                Tasks = tasks.ToList(),
+                Projects = new SelectList(projects, "Id", "Name")
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult IndexDelete(int? project)
+        {
+            IQueryable<Models.Task> tasks = _context.Tasks.Include(p => p.Project);
+            tasks = tasks.Where(e => e.Delete == true);
+            tasks = tasks.Include(e => e.User);
             //Вытягиваем все задачи по выбранному проекту
             if (project != null && project != 0)
             {

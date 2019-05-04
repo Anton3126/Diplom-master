@@ -32,7 +32,14 @@
             Проект
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Project.Id)
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+        <dt>
+            Выполняет
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+            @Html.DisplayFor(model => model.User.LastName)
         </dd>
     </dl>
 </div>

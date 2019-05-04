@@ -36,7 +36,7 @@ namespace WebApplication1
             {
                 User user1 = new User
                 {   Email = user1Email,
-                    UserName = user1Email,
+                    UserName = "YuriyKnaev",
                     DateImployment = DateTime.Now,
                     Year = 1998,
                     FirmID = 2,
@@ -54,7 +54,7 @@ namespace WebApplication1
             {
                 User user2 = new User
                 {   Email = user2Email,
-                    UserName = user2Email,
+                    UserName = "RibakovIlya",
                     DateImployment = DateTime.Now,
                     Year = 1998,
                     FirmID = 3,
@@ -73,7 +73,7 @@ namespace WebApplication1
                 User user3 = new User
                 {
                     Email = user3Email,
-                    UserName = user3Email,
+                    UserName = "SokolovVladislav",
                     DateImployment = DateTime.Now,
                     Year = 1998,
                     FirmID = 1,

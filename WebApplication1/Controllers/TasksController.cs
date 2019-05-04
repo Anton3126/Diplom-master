@@ -43,6 +43,7 @@ namespace Identity.Controllers
             {
                 return NotFound();
             }
+            task.User = _context.Users.Find(task.UserId);
 
             return View(task);
         }
@@ -50,7 +51,13 @@ namespace Identity.Controllers
         // GET: Tasks/Create
         public IActionResult Create()
         {
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
+            IQueryable<User> users = _context.Users;
+            users = users.Where(p => p.Delete == false);
+            User UserNull = new User { Id = null, UserName = "Никто"};
+            List<User> usersList = new List<User> { UserNull};
+            usersList.AddRange(users);
+            ViewBag.Users = new SelectList(usersList, "Id", "UserName");
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
             return View();
         }
 
@@ -59,15 +66,22 @@ namespace Identity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Date,ProjectId")] WebApplication1.Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Date,ProjectId,UserId")] WebApplication1.Models.Task task)
         {
             if (ModelState.IsValid)
             {
+                task.Date = DateTime.Now;
                 _context.Add(task);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("/ProjectTasks/Index");
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+            IQueryable<User> users = _context.Users;
+            users = users.Where(p => p.Delete == false);
+            User UserNull = new User { Id = null, UserName = "Никто" };
+            List<User> usersList = new List<User> { UserNull };
+            usersList.AddRange(users);
+            ViewBag.Users = new SelectList(usersList, "Id", "UserName");
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", task.ProjectId);
             return View(task);
         }
 
@@ -84,7 +98,13 @@ namespace Identity.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+            IQueryable<User> users = _context.Users;
+            users = users.Where(p => p.Delete == false);
+            User UserNull = new User { Id = null, UserName = "Никто" };
+            List<User> usersList = new List<User> { UserNull };
+            usersList.AddRange(users);
+            ViewBag.Users = new SelectList(usersList, "Id", "UserName", task.UserId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", task.ProjectId);
             return View(task);
         }
 
@@ -118,9 +138,15 @@ namespace Identity.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect("/ProjectTasks/Index");
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+            IQueryable<User> users = _context.Users;
+            users = users.Where(p => p.Delete == false);
+            User UserNull = new User { Id = null, UserName = "Никто" };
+            List<User> usersList = new List<User> { UserNull };
+            usersList.AddRange(users);
+            ViewBag.Users = new SelectList(usersList, "Id", "UserName", task.UserId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", task.ProjectId);
             return View(task);
         }
 
@@ -139,6 +165,7 @@ namespace Identity.Controllers
             {
                 return NotFound();
             }
+            task.User = _context.Users.Find(task.UserId);
 
             return View(task);
         }
@@ -149,9 +176,19 @@ namespace Identity.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Tasks.FindAsync(id);
-            _context.Tasks.Remove(task);
+            task.Delete = true;
+            _context.Tasks.Update(task);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Redirect("/ProjectTasks/Index");
+        }
+
+        public async Task<IActionResult> Undelete(int id)
+        {
+            var task = await _context.Tasks.FindAsync(id);
+            task.Delete = false;
+            _context.Tasks.Update(task);
+            await _context.SaveChangesAsync();
+            return Redirect("/ProjectTasks/Index");
         }
 
         private bool TaskExists(int id)

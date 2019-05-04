@@ -16,35 +16,38 @@
     <table class="table">
         <thead>
             <tr>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Никнейм
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Имя
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Отчество
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Фамилия
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Год рождения
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Дата регистрации
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Фирма
                 </th>
                 <th style="width:12%;">
                     Название кошелька
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Валюта
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Баланс
+                </th>
+                <th style="width:7%;">
+                    Задачи
                 </th>
             </tr>
         </thead>
@@ -53,7 +56,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Email)
+                        @Html.DisplayFor(modelItem => item.UserName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstName)
@@ -97,6 +100,14 @@
                             <br>
                         }
                    </nobr> </td>
+                    <td>
+                        @foreach (var task in item.Tasks)
+                        {
+
+                            @Html.DisplayFor(taskItem => task.Name)
+                            <br>
+                        }
+                    </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |

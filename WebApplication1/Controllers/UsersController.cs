@@ -32,6 +32,7 @@ namespace WebApplication1.Controllers
             users = users.Where(p => p.Delete == false);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
+            users = users.Include(p => p.Tasks);
             var userList = users.ToList();
             foreach (User user in userList.ToList())
             {
@@ -40,6 +41,16 @@ namespace WebApplication1.Controllers
                     if (wallet.Delete == true)
                     {
                         user.Wallets.Remove(wallet);
+                    }
+                }
+            }
+            foreach (User user in userList.ToList())
+            {
+                foreach (Models.Task task in user.Tasks.ToList())
+                {
+                    if (task.Delete == true)
+                    {
+                        user.Tasks.Remove(task);
                     }
                 }
             }
@@ -99,9 +110,10 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 model.DateImployment = DateTime.Now;
-                User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
+                User user = new User { Email = model.Email, UserName = model.UserName, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
                     MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = model.DateImployment, Delete = false };
                 var result = await _userManager.CreateAsync(user, model.Password);
+                await _userManager.AddToRoleAsync(user, "user");
                 await _context.SaveChangesAsync();
                 Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id, WalletName = user.FirstName + " " + user.LastName + " " + model.Currency };
                 _context.Add(wallet);
@@ -138,7 +150,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, Year = user.Year,
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.UserName, Year = user.Year,
                 FirmID = user.FirmID,
                 FirstName = user.FirstName,
                 MiddleName = user.MiddleName,
@@ -160,7 +172,7 @@ namespace WebApplication1.Controllers
                 if (user != null)
                 {
                     user.Email = model.Email;
-                    user.UserName = model.Email;
+                    user.UserName = model.UserName;
                     user.Year = model.Year;
                     user.FirmID = model.FirmID;
                     user.FirstName = model.FirstName;

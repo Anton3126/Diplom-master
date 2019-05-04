@@ -4,8 +4,12 @@
     ViewData["Title"] = "Каталог задач";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Каталог задач</h2>
+<table style="width:100%;">
+    <tr>
+        <td align="left"><h2>Каталог задач</h2></td>
+        <td align="right"><a style="color:#ff0000" asp-controller="ProjectTasks" asp-action="IndexDelete"><p align="right">Удаленные</p></a></td>
+    </tr>
+</table>
 
 <p>
     <a asp-controller="Tasks" asp-action="Create">Добавить задачу</a>
@@ -28,6 +32,7 @@
         <th>Описание</th>
         <th>Дата создания</th>
         <th>Проект</th>
+        <th>Выполняет</th>
         <th> </th>
     </tr>
 
@@ -47,6 +52,10 @@
                 @Html.DisplayFor(modelItem => item.Project.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+                @Html.DisplayFor(modelItem => item.User.LastName)
+            </td>
+            <td>
                 <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
                 <a asp-controller="Tasks" asp-action="Details" asp-route-id="@item.Id">Детали</a> |
                 <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
@@ -58,7 +67,3 @@
 <br>
 <br>
 <h4>Количество задач: @Model.Tasks.Count()</h4>
-
-<div>
-    <a asp-controller="Projects" asp-action="Index">Отмена</a>
-</div>

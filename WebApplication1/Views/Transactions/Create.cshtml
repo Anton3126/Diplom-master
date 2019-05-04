@@ -6,66 +6,66 @@
 
 <div class="container">
 
-<h2>Перевод</h2>
+    <h2>Перевод</h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="WalletIDSender" class="control-label">Отправитель</label>
-                <select asp-for="WalletIDSender" class="form-control" asp-items="ViewBag.WalletSender"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="WalletIDRecipient" class="control-label">Получатель</label>
-                <select asp-for="WalletIDRecipient" class="form-control" asp-items="ViewBag.WalletRecipient"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Course" class="control-label">Курс</label>
-                <input type="text" asp-for="Course" class="form-control" id="course" />
-            </div>
-            <div class="form-group">
-                <label asp-for="AmountInCurrencySender" class="control-label">Сумма в валюте отправителя</label>
-                <input type="text" asp-for="AmountInCurrencySender" class="form-control" id="sender" oninput="convertTo(this)" />
-            </div>
-            <div class="form-group">
-                <label asp-for="AmountInCurrencyRecipient" class="control-label">Сумма в валюте получателя</label>
-                <input type="text" asp-for="AmountInCurrencyRecipient" class="form-control" id="recipient" oninput="convertFrom(this)"/>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Комментарий</label>
-                <input type="text" asp-for="Description" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label">Тип</label>
-                <select asp-for="Type" class="form-control" asp-items="ViewBag.Types"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Перевести" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="WalletIDSender" class="control-label">Отправитель</label>
+                    <select asp-for="WalletIDSender" class="form-control" asp-items="ViewBag.WalletSender"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WalletIDRecipient" class="control-label">Получатель</label>
+                    <select asp-for="WalletIDRecipient" class="form-control" asp-items="ViewBag.WalletRecipient"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Course" class="control-label">Курс</label>
+                    <input type="text" asp-for="Course" class="form-control" id="course" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="AmountInCurrencySender" class="control-label">Сумма в валюте отправителя</label>
+                    <input type="text" asp-for="AmountInCurrencySender" class="form-control" id="sender" oninput="convertTo(this)" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="AmountInCurrencyRecipient" class="control-label">Сумма в валюте получателя</label>
+                    <input type="text" asp-for="AmountInCurrencyRecipient" class="form-control" id="recipient" oninput="convertFrom(this)" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Комментарий</label>
+                    <input type="text" asp-for="Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label">Тип</label>
+                    <select asp-for="Type" class="form-control" asp-items="ViewBag.Types"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Перевести" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <p align="left">
+                15.04.2019
+                <br />Рубль  →  Доллар   0,016
+                <br />Доллар →  Рубль    64,26
+                <br />Рубль  →  Евро     0,014
+                <br />Евро   →  Рубль    72,70
+                <br />Доллар →  Евро     0,88
+                <br />Евро   →  Доллар   1,13
+            </p>
+        </div>
     </div>
 
-    <div class="col-md-4">
-        <p align="left">
-            15.04.2019
-            <br />Рубль  →  Доллар   0,016
-            <br />Доллар →  Рубль    64,26
-            <br />Рубль  →  Евро     0,014
-            <br />Евро   →  Рубль    72,70
-            <br />Доллар →  Евро     0,88
-            <br />Евро   →  Доллар   1,13
-        </p>
+    <div>
+        <a asp-action="Index">Отмена</a>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Отмена</a>
-</div>
 
 </div>
 
-<script> 
+<script>
     function convertTo(e) {
         e.setAttribute("value", e.value);
         let recipient = document.getElementById("recipient");

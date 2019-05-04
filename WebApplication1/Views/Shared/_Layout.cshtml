@@ -29,18 +29,18 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Главная</a>
             </div>
             <div class="navbar-collapse collapse">
-                @if (User.Identity.IsAuthenticated)
+                @if (User.IsInRole("admin"))
                 {
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Firms" asp-action="Index">Фирмы</a></li>
-                    <li><a asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a></li>
-                    <li><a asp-area="" asp-controller="ProjectTasks" asp-action="Index">Задачи</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Сотрудники</a></li>
-                    <li><a asp-area="" asp-controller="Wallets" asp-action="Index">Кошельки</a></li>
-                    <li><a asp-area="" asp-controller="Transactions" asp-action="Index">Транзакции</a></li>
-                    <li><a asp-area="" asp-controller="Invoices" asp-action="Index">Инвойсы</a></li>
-                    <li><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
-                </ul>
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Firms" asp-action="Index">Фирмы</a></li>
+                        <li><a asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a></li>
+                        <li><a asp-area="" asp-controller="ProjectTasks" asp-action="Index">Задачи</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Сотрудники</a></li>
+                        <li><a asp-area="" asp-controller="Wallets" asp-action="Index">Кошельки</a></li>
+                        <li><a asp-area="" asp-controller="Transactions" asp-action="Index">Транзакции</a></li>
+                        <li><a asp-area="" asp-controller="Invoices" asp-action="Index">Инвойсы</a></li>
+                        <li><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
+                    </ul>
                 }
                 <div class="navbar-right">
                     <table>
