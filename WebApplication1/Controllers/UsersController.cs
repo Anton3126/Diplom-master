@@ -13,16 +13,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class UsersController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
+        private readonly List<string> posts = new List<string> { "Разработчик", "Агент", "Партнер" };
         UserManager<User> _userManager;
+        RoleManager<IdentityRole> _roleManager;
         private readonly SchoolContext _context;
 
-        public UsersController(UserManager<User> userManager, SchoolContext context)
+        public UsersController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SchoolContext context )
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
         }
 
@@ -115,15 +118,20 @@ namespace WebApplication1.Controllers
 
         public IActionResult Create()
         {
+            var allRoles = _roleManager.Roles.ToList();
+            CreateUserViewModel model = new CreateUserViewModel  { UserRoles = null, AllRoles = allRoles };
+
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName");
+
             ViewBag.Curryncies = new SelectList(curryncies);
-            return View();
+            ViewBag.Post = new SelectList(posts);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
+        public async Task<IActionResult> Create(CreateUserViewModel model, List<string> roles)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +139,8 @@ namespace WebApplication1.Controllers
                 User user = new User { Email = model.Email, UserName = model.UserName, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
                     MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = model.DateImployment, Delete = false };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                await _userManager.AddToRoleAsync(user, "user");
+                //await _userManager.AddToRoleAsync(user, "implementator");
+                await _userManager.AddToRolesAsync(user, roles);
                 await _context.SaveChangesAsync();
                 Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id, WalletName = user.FirstName + " " + user.LastName + " " + model.Currency };
                 _context.Add(wallet);
@@ -152,6 +161,7 @@ namespace WebApplication1.Controllers
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
             ViewBag.Curryncies = new SelectList(curryncies);
+            ViewBag.Post = new SelectList(posts);
             return View(model);
         }
 
@@ -168,21 +178,26 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.UserName, Year = user.Year,
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var allRoles = _roleManager.Roles.ToList();
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName, Year = user.Year,
                 FirmID = user.FirmID,
                 FirstName = user.FirstName,
                 MiddleName = user.MiddleName,
                 LastName = user.LastName,
-                DateImployment = user.DateImployment
+                DateImployment = user.DateImployment,
+                UserRoles = userRoles,
+                AllRoles = allRoles
             };
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
+            ViewBag.Post = new SelectList(posts);
             return View(model);
         }   
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> Edit(EditUserViewModel model, List<string> roles)
         {
             if (ModelState.IsValid)
             {
@@ -215,6 +230,7 @@ namespace WebApplication1.Controllers
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
+            ViewBag.Post = new SelectList(posts);
             return View(model);
         }
 

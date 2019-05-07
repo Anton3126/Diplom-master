@@ -77,14 +77,17 @@
                     @Html.DisplayFor(modelItem => item.DateImployment)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                    <a asp-controller="Firms" asp-route-id="@item.FirmID" asp-action="Details">
+                        @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                    </a>
                 </td>
                 <td>
                     <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
-
+                        <a asp-controller="Wallets" asp-route-id="@wallet.WalletID" asp-action="Details">
                             @Html.DisplayFor(walletItem => wallet.WalletName)
+                        </a>
                             <br>
                         }
                     </nobr>
@@ -113,19 +116,22 @@
                     <nobr>
                         @foreach (var task in item.Tasks)
                         {
-
+                        <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
                             @Html.DisplayFor(taskItem => task.Name)
+                        </a>
                             <br>
                         }
                     </nobr>
-                    
+
                 </td>
                 <td>
                     <nobr>
                         @foreach (var task in item.Tasks)
                         {
 
+                        <a asp-controller="Projects" asp-route-id="@task.Project.Id" asp-action="Details">
                             @Html.DisplayFor(taskItem => task.Project.Name)
+                        </a>
                             <br>
                         }
                     </nobr>

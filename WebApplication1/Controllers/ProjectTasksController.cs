@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class ProjectTasksController : Controller
     {
         private SchoolContext _context;

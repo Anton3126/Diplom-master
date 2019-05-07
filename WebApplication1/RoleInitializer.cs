@@ -15,13 +15,21 @@ namespace WebApplication1
             string user1Email = "Knaev@mail.ru";
             string user2Email = "Ribakov@mail.ru";
             string user3Email = "Sokolov@mail.ru";
-            if (await roleManager.FindByNameAsync("admin") == null)
+            if (await roleManager.FindByNameAsync("Админ") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("admin"));
+                await roleManager.CreateAsync(new IdentityRole("Админ"));
             }
-            if (await roleManager.FindByNameAsync("user") == null)
+            if (await roleManager.FindByNameAsync("Разработчик") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("user"));
+                await roleManager.CreateAsync(new IdentityRole("Разработчик"));
+            }
+            if (await roleManager.FindByNameAsync("Агент") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("Агент"));
+            }
+            if (await roleManager.FindByNameAsync("Партнер") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("Партнер"));
             }
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
@@ -29,7 +37,7 @@ namespace WebApplication1
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(admin, "Админ");
                 }
             }
             if (await userManager.FindByNameAsync(user1Email) == null)
@@ -42,12 +50,12 @@ namespace WebApplication1
                     FirmID = 2,
                     FirstName = "Юрий",
                     MiddleName = "Сергеевич",
-                    LastName = "Кнаев",
+                    LastName = "Кнаев"
                 };
                 IdentityResult result = await userManager.CreateAsync(user1, password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user1, "user");
+                    await userManager.AddToRoleAsync(user1, "Разработчик");
                 }
             }
             if (await userManager.FindByNameAsync(user2Email) == null)
@@ -60,12 +68,12 @@ namespace WebApplication1
                     FirmID = 3,
                     FirstName = "Илья",
                     MiddleName = "Александрович",
-                    LastName = "Рыбаков",
+                    LastName = "Рыбаков"
                 };
                 IdentityResult result = await userManager.CreateAsync(user2, password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user2, "user");
+                    await userManager.AddToRoleAsync(user2, "Разработчик");
                 }
             }
             if (await userManager.FindByNameAsync(user3Email) == null)
@@ -79,12 +87,12 @@ namespace WebApplication1
                     FirmID = 1,
                     FirstName = "Владислав",
                     MiddleName = "Олегович",
-                    LastName = "Соколов",
+                    LastName = "Соколов"
                 };
                 IdentityResult result = await userManager.CreateAsync(user3, password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user3, "user");
+                    await userManager.AddToRoleAsync(user3, "Разработчик");
                 }
             }
         }

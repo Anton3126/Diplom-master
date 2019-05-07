@@ -12,7 +12,7 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class TransactionsController : Controller
     {
         private readonly List<string> types = new List<string> { "Налоги", "Аренда", "Зарплата", "Другое" };
