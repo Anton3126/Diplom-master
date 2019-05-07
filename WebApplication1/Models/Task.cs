@@ -12,6 +12,7 @@ namespace WebApplication1.Models
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public bool Status { get; set; }
+        public int Hours { get; set; }
 
         public string UserId { get; set; }
         public User User { get; set; }

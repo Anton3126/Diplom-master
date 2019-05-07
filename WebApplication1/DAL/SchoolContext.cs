@@ -25,6 +25,10 @@ namespace WebApplication1.DAL
             modelBuilder.Entity<UserTask>()
             .HasKey(t => new { t.UserId, t.TaskId });
 
+            modelBuilder.Entity<Models.Task>()
+                .Property(t => t.Hours)
+                .HasDefaultValue(0);
+
             modelBuilder.Entity<Firm>().HasData(
             new Firm[]
             {
