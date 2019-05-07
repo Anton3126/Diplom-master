@@ -1,0 +1,69 @@
+﻿@model WebApplication1.Models.Invoice
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+<div class="container">
+
+    <h2>Удалить</h2>
+
+    <h3>Вы уверены, что хотите удалить инвойс?</h3>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Проект
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Project.Name)
+            </dd>
+            <dt>
+                Клиент
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ClientName)
+            </dd>
+            <dt>
+                Дата создания
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateCreate)
+            </dd>
+            <dt>
+                Ожидаемая стоимость проекта
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AmountWait)
+            </dd>
+            <dt>
+                Реальная стоимость проекта
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AmountReal)
+            </dd>
+            <dt>
+                Ожидаемая дата оплаты
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DatePaymentWait)
+            </dd>
+            <dt>
+                Реальная дата оплаты
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DatePaymentReal)
+            </dd>
+            <dt>
+                Комментарий
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="InvoiceID" />
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            <a asp-action="Index">Отмена</a>
+        </form>
+    </div>
+</div>

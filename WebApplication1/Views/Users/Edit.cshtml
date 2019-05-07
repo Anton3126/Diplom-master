@@ -1,12 +1,10 @@
-﻿@model WebApplication1.ViewModels.EditUserViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@model WebApplication1.ViewModels.EditUserViewModel
 @{
     ViewBag.Title = "Редактирование сотрудника";
 }
-
 <div class="container">
-
     <h2>Редактирование сотрудника</h2>
-
     <div class="row">
         <div class="col-md-4">
             <form asp-action="Edit" asp-controller="Users">
@@ -15,8 +13,12 @@
                     <input type="hidden" asp-for="Id" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Email" class="control-label">Никнейм</label>
+                    <label asp-for="Email" class="control-label">Email</label>
                     <input type="text" asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label">Никнейм</label>
+                    <input type="text" asp-for="UserName" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label asp-for="FirstName" class="control-label">Имя</label>
@@ -35,12 +37,16 @@
                     <input type="number" asp-for="Year" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="DateImployment" class="control-label">Дата регистрации</label>
-                    <input type="text" asp-for="DateImployment" class="form-control" />
-                </div>
-                <div class="form-group">
                     <label asp-for="FirmID" class="control-label">Фирма</label>
                     <select asp-for="FirmID" class="form-control" asp-items="ViewBag.Firms"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Роли</label><br />
+                    @foreach (IdentityRole role in Model.AllRoles)
+                    {
+                        <input type="checkbox" style="width:20px;height:20px;" name="roles" value="@role.Name"
+                               @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") /><font size="4">@role.Name</font> <br />
+                        }
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Сохранить" class="btn btn-default" />
@@ -48,10 +54,8 @@
             </form>
         </div>
     </div>
-
     <div>
         <a asp-action="Index">Отмена</a>
     </div>
-
 
 </div>

@@ -1,0 +1,66 @@
+﻿@model WebApplication1.Models.Invoice
+
+@{
+    ViewData["Title"] = "Детали инвойса";
+}
+<div class="container">
+
+    <h2>Детали инвойса</h2>
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Проект
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Project.Name)
+            </dd>
+            <dt>
+                Клиент
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ClientName)
+            </dd>
+            <dt>
+                Дата создания
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateCreate)
+            </dd>
+            <dt>
+                Ожидаемая стоимость проекта
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AmountWait)
+            </dd>
+            <dt>
+                Реальная стоимость проекта
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AmountReal)
+            </dd>
+            <dt>
+                Ожидаемая дата оплаты
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DatePaymentWait)
+            </dd>
+            <dt>
+                Реальная дата оплаты
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DatePaymentReal)
+            </dd>
+            <dt>
+                Комментарий
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.InvoiceID">Изменить</a> |
+        <a asp-action="Index">Назад</a>
+    </div>
+</div>

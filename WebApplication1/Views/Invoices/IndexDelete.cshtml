@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebApplication1.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Удаленные нвойсы";
+}
+
+<table style="width:100%;">
+    <tr>
+        <td align="left"><h2 style="color:#ff0000">Удаленные инвойсы</h2></td>
+        <td align="right"><a asp-controller="Invoices" asp-action="Index"><p align="right">Назад</p></a></td>
+    </tr>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:10%;">
+                Проект
+            </th>
+            <th style="width:10%;">
+                Клиент
+            </th>
+            <th style="width:10%;">
+                Дата создания
+            </th>
+            <th style="width:10%;">
+                Ожидаемая стоимость проекта
+            </th>
+            <th style="width:10%;">
+                Реальная стоимость проекта
+            </th>
+            <th style="width:10%;">
+                Ожидаемая дата оплаты
+            </th>
+            <th style="width:10%;">
+                Реальная дата оплаты
+            </th>
+            <th style="width:10%;">
+                Комментарий
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountWait)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountReal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePaymentWait)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePaymentReal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <form asp-action="Undelete" asp-route-id="@item.InvoiceID" method="post">
+                        <button type="submit" class="btn btn-success">
+                            Восстановить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br>
+<br>
+<h4>Количество удаленных инвойсов: @Model.Count()</h4>

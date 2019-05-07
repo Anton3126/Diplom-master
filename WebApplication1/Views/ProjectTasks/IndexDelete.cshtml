@@ -4,16 +4,13 @@
     ViewData["Title"] = "Каталог задач";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <table style="width:100%;">
     <tr>
-        <td align="left"><h2>Каталог задач</h2></td>
-        <td align="right"><a style="color:#ff0000" asp-controller="ProjectTasks" asp-action="IndexDelete"><p align="right">Удаленные</p></a></td>
+        <td align="left"><h2 style="color:#ff0000">Каталог удаленных задач</h2></td>
+        <td align="right"><a asp-controller="ProjectTasks" asp-action="Index"><p align="right">Назад</p></a></td>
     </tr>
 </table>
-
-<p>
-    <a asp-controller="Tasks" asp-action="Create">Добавить задачу</a>
-</p>
 
 <form method="get">
     <div class="form-inline form-group">
@@ -27,11 +24,9 @@
 </form>
 
 <table class="table table-striped">
-    <tr align="right">
+    <tr>
         <th>Название</th>
         <th>Описание</th>
-        <th>Исполнитель</th>
-        <th>Отработано часов</th>
         <th>Дата создания</th>
         <th>Проект</th>
         <th>Выполняет</th>
@@ -48,28 +43,21 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @if (item.UserId == null)
-            {
-                @:Не назначен
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Hours)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Project.Name)
         </td>
         <td>
-            <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-            <a asp-controller="Tasks" asp-action="Details" asp-route-id="@item.Id">Детали</a> |
-            <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+            @Html.DisplayFor(modelItem => item.User.LastName)
+        </td>
+        <td>
+            <form asp-controller="Tasks" asp-action="Undelete" asp-route-id="@item.Id" method="post">
+                <button type="submit" class="btn btn-sm btn-success">
+                    Восстановить
+                </button>
+            </form>
         </td>
     </tr>
     }
@@ -77,4 +65,4 @@
 
 <br>
 <br>
-<h4>Количество задач: @Model.Tasks.Count()</h4>
+<h4>Количество удаленных задач: @Model.Tasks.Count()</h4>

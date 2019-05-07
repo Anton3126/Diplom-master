@@ -12,7 +12,7 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class FirmsController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
@@ -24,18 +24,40 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Firms
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IQueryable<Firm> firms = _context.Firm.Include(e => e.Wallets);
             firms = firms.Where(p => p.Delete == false);
-            return View(await firms.ToListAsync());
+            var firmList = firms.ToList();
+            foreach (Firm firm in firmList.ToList())
+            {
+                foreach (Wallet wallet in firm.Wallets.ToList())
+                {
+                    if (wallet.Delete == true)
+                    {
+                        firm.Wallets.Remove(wallet);
+                    }
+                }
+            }
+            return View(firmList);
         }
 
-        public async Task<IActionResult> IndexDelete()
+        public IActionResult IndexDelete()
         {
             IQueryable<Firm> firms = _context.Firm.Include(e => e.Wallets);
             firms = firms.Where(p => p.Delete == true);
-            return View(await firms.ToListAsync());
+            var firmList = firms.ToList();
+            foreach (Firm firm in firmList.ToList())
+            {
+                foreach (Wallet wallet in firm.Wallets.ToList())
+                {
+                    if (wallet.Delete == true)
+                    {
+                        firm.Wallets.Remove(wallet);
+                    }
+                }
+            }
+            return View(firmList);
         }
 
         // GET: Firms/Details/5
@@ -168,6 +190,15 @@ namespace WebApplication1.Controllers
             _context.Firm.Update(firm);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Undelete(int id)
+        {
+            var firm = await _context.Firm.FindAsync(id);
+            firm.Delete = false;
+            _context.Firm.Update(firm);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexDelete));
         }
 
         private bool FirmExists(int id)

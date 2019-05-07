@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Identity.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class TasksController : Controller
     {
         private readonly SchoolContext _context;
@@ -45,6 +45,7 @@ namespace Identity.Controllers
             {
                 return NotFound();
             }
+            task.User = _context.Users.Find(task.UserId);
 
             return View(task);
         }
@@ -147,6 +148,7 @@ namespace Identity.Controllers
             {
                 return NotFound();
             }
+            task.User = _context.Users.Find(task.UserId);
 
             return View(task);
         }
@@ -157,7 +159,17 @@ namespace Identity.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Tasks.FindAsync(id);
-            _context.Tasks.Remove(task);
+            task.Delete = true;
+            _context.Tasks.Update(task);
+            await _context.SaveChangesAsync();
+            return Redirect("/ProjectTasks/Index");
+        }
+
+        public async Task<IActionResult> Undelete(int id)
+        {
+            var task = await _context.Tasks.FindAsync(id);
+            task.Delete = false;
+            _context.Tasks.Update(task);
             await _context.SaveChangesAsync();
             return Redirect("/ProjectTasks/Index");
         }

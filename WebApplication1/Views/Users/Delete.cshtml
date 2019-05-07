@@ -1,0 +1,66 @@
+﻿@model WebApplication1.Models.User
+@{
+    ViewData["Title"] = "Удалить";
+}
+<div class="container">
+    <h2>Удалить</h2>
+    <h3>Вы уверены, что хотите удалить кошелек?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Почта
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt>
+                Никнейм
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+            <dt>
+                Имя
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt>
+                Отчество
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MiddleName)
+            </dd>
+            <dt>
+                Фамилия
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt>
+                Фирма
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Firm.FirmName)
+            </dd>
+            <dt>
+                Год рождения
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Year)
+            </dd>
+            <dt>
+                Дата регистрации
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateImployment)
+            </dd>
+        </dl>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            <a asp-action="Index">Отмена</a>
+        </form>
+    </div>
+</div>

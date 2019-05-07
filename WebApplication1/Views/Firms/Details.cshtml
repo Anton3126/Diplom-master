@@ -1,0 +1,28 @@
+﻿@model WebApplication1.Models.Firm
+@{
+    ViewData["Title"] = "Детали фирмы";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>Детали фирмы</h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Название фирмы
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirmName)
+            </dd>
+            <dt>
+                Адрес
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirmAddress)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.FirmID">Изменить</a> |
+        <a asp-action="Index">Назад</a>
+    </div>
+</div>

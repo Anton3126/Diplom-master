@@ -7,11 +7,11 @@
     @if (User.Identity.IsAuthenticated)
     {
         @User.Identity.Name
-        }
-        else
-        {
-            <a asp-controller="Account" asp-action="Login"><font size="30">Вход</font></a>
-            <br>
-            <a asp-controller="Account" asp-action="Register"><font size="30">Регистрация</font></a>
-        }
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login"><font size="30">Вход</font></a>
+        <br>
+        <a asp-controller="Account" asp-action="Register"><font size="30">Регистрация</font></a>
+    }
 </div>

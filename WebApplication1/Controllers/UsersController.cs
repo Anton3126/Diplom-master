@@ -13,25 +13,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class UsersController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
+        private readonly List<string> posts = new List<string> { "Разработчик", "Агент", "Партнер" };
         UserManager<User> _userManager;
+        RoleManager<IdentityRole> _roleManager;
         private readonly SchoolContext _context;
 
-        public UsersController(UserManager<User> userManager, SchoolContext context)
+        public UsersController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SchoolContext context )
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IQueryable<User> users = _userManager.Users;
             users = users.Where(p => p.Delete == false);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
+            users = users.Include(p => p.Tasks);
             var userList = users.ToList();
             foreach (User user in userList.ToList())
             {
@@ -41,7 +45,20 @@ namespace WebApplication1.Controllers
                     {
                         user.Wallets.Remove(wallet);
                     }
-                    var result = await _userManager.UpdateAsync(user);
+                }
+            }
+            foreach (User user in userList.ToList())
+            {
+                foreach (Models.Task task in user.Tasks.ToList())
+                {
+                    if (task.Delete == true)
+                    {
+                        user.Tasks.Remove(task);
+                    }
+                    else
+                    {
+                        task.Project = _context.Projects.Find(task.ProjectId);
+                    }
                 }
             }
             return View(userList);
@@ -53,27 +70,77 @@ namespace WebApplication1.Controllers
             users = users.Where(p => p.Delete == true);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
-            return View(users);
+            var userList = users.ToList();
+            foreach (User user in userList.ToList())
+            {
+                foreach (Wallet wallet in user.Wallets.ToList())
+                {
+                    if (wallet.Delete == true)
+                    {
+                        user.Wallets.Remove(wallet);
+                    }
+                }
+            }
+            foreach (User user in userList.ToList())
+            {
+                foreach (Models.Task task in user.Tasks.ToList())
+                {
+                    if (task.Delete == true)
+                    {
+                        user.Tasks.Remove(task);
+                    }
+                    else
+                    {
+                        task.Project = _context.Projects.Find(task.ProjectId);
+                    }
+                }
+            }
+            return View(userList);
+        }
+
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Firm = _context.Firm.Find(user.FirmID);
+            return View(user);
         }
 
         public IActionResult Create()
         {
+            var allRoles = _roleManager.Roles.ToList();
+            CreateUserViewModel model = new CreateUserViewModel  { UserRoles = null, AllRoles = allRoles };
+
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName");
+
             ViewBag.Curryncies = new SelectList(curryncies);
-            return View();
+            ViewBag.Post = new SelectList(posts);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
+        public async Task<IActionResult> Create(CreateUserViewModel model, List<string> roles)
         {
             if (ModelState.IsValid)
             {
                 model.DateImployment = DateTime.Now;
-                User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
+                User user = new User { Email = model.Email, UserName = model.UserName, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
                     MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = model.DateImployment, Delete = false };
                 var result = await _userManager.CreateAsync(user, model.Password);
+                //await _userManager.AddToRoleAsync(user, "implementator");
+                await _userManager.AddToRolesAsync(user, roles);
                 await _context.SaveChangesAsync();
                 Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id, WalletName = user.FirstName + " " + user.LastName + " " + model.Currency };
                 _context.Add(wallet);
@@ -94,6 +161,7 @@ namespace WebApplication1.Controllers
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
             ViewBag.Curryncies = new SelectList(curryncies);
+            ViewBag.Post = new SelectList(posts);
             return View(model);
         }
 
@@ -110,21 +178,26 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, Year = user.Year,
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var allRoles = _roleManager.Roles.ToList();
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName, Year = user.Year,
                 FirmID = user.FirmID,
                 FirstName = user.FirstName,
                 MiddleName = user.MiddleName,
                 LastName = user.LastName,
-                DateImployment = user.DateImployment
+                DateImployment = user.DateImployment,
+                UserRoles = userRoles,
+                AllRoles = allRoles
             };
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
+            ViewBag.Post = new SelectList(posts);
             return View(model);
         }   
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> Edit(EditUserViewModel model, List<string> roles)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +205,7 @@ namespace WebApplication1.Controllers
                 if (user != null)
                 {
                     user.Email = model.Email;
-                    user.UserName = model.Email;
+                    user.UserName = model.UserName;
                     user.Year = model.Year;
                     user.FirmID = model.FirmID;
                     user.FirstName = model.FirstName;
@@ -157,11 +230,31 @@ namespace WebApplication1.Controllers
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
+            ViewBag.Post = new SelectList(posts);
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .Include(w => w.Firm)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user != null)
@@ -170,6 +263,17 @@ namespace WebApplication1.Controllers
                 IdentityResult result = await _userManager.UpdateAsync(user);
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Undelete(string id)
+        {
+            User user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                user.Delete = false;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+            }
+            return RedirectToAction("IndexDelete");
         }
     }
 }

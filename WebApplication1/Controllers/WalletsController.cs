@@ -12,7 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Админ")]
     public class WalletsController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
@@ -40,6 +40,26 @@ namespace WebApplication1.Controllers
             wallets = wallets.Where(p => p.Delete == true);
             wallets = wallets.Include(p => p.User);
             return View(await wallets.ToListAsync());
+        }
+
+        // GET: Wallets/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var wallet = await _context.Wallet
+                .FirstOrDefaultAsync(m => m.WalletID == id);
+            if (wallet == null)
+            {
+                return NotFound();
+            }
+            wallet.Firm = _context.Firm.Find(wallet.FirmID);
+            wallet.User = _context.Users.Find(wallet.UserId);
+
+            return View(wallet);
         }
 
         public IActionResult CreateWalletFirm()
@@ -228,6 +248,15 @@ namespace WebApplication1.Controllers
             _context.Wallet.Update(wallet);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Undelete(int id)
+        {
+            var wallet = await _context.Wallet.FindAsync(id);
+            wallet.Delete = false;
+            _context.Wallet.Update(wallet);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexDelete));
         }
 
         private bool WalletExists(int id)

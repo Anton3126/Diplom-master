@@ -51,7 +51,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
@@ -95,6 +95,13 @@
                         <br>
                     }
                 </nobr></td>
+                <td>
+                    <form asp-action="Undelete" asp-route-id="@item.Id" method="post">
+                        <button type="submit" class="btn btn-success">
+                            Восстановить
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
 

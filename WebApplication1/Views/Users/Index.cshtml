@@ -16,96 +16,132 @@
     <table class="table">
         <thead>
             <tr>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Никнейм
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Имя
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Отчество
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Фамилия
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Год рождения
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Дата регистрации
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Фирма
                 </th>
                 <th style="width:12%;">
                     Название кошелька
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Валюта
                 </th>
-                <th style="width:8%;">
+                <th style="width:7%;">
                     Баланс
+                </th>
+                <th style="width:7%;">
+                    Задачи
+                </th>
+                <th style="width:7%;">
+                    Проекты
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MiddleName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Year)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateImployment)
-                    </td>
-                    <td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateImployment)
+                </td>
+                <td>
+                    <a asp-controller="Firms" asp-route-id="@item.FirmID" asp-action="Details">
                         @Html.DisplayFor(modelItem => item.Firm.FirmName)
-                    </td>
-                    <td><nobr>
+                    </a>
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
-
+                        <a asp-controller="Wallets" asp-route-id="@wallet.WalletID" asp-action="Details">
                             @Html.DisplayFor(walletItem => wallet.WalletName)
+                        </a>
                             <br>
                         }
-                    </nobr></td>
-                    <td><nobr>
+                    </nobr>
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
 
                             @Html.DisplayFor(walletItem => wallet.Currency)
                             <br>
                         }
-                    </nobr></td>
-                    <td><nobr>
+                    </nobr>
+                </td>
+                <td>
+                    <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
 
                             @Html.DisplayFor(walletItem => wallet.Balance)
                             <br>
                         }
-                   </nobr> </td>
-                    <td>
-                        <form asp-action="Delete" asp-route-id="@item.Id" method="post">
-                            <a class="btn btn-default" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                            <button type="submit" class="btn btn-default">
-                                Удалить
-                            </button>
-                        </form>
-                    </td>
-                </tr>
+                    </nobr>
+                </td>
+                <td>
+                    <nobr>
+                        @foreach (var task in item.Tasks)
+                        {
+                        <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
+                            @Html.DisplayFor(taskItem => task.Name)
+                        </a>
+                            <br>
+                        }
+                    </nobr>
+
+                </td>
+                <td>
+                    <nobr>
+                        @foreach (var task in item.Tasks)
+                        {
+
+                        <a asp-controller="Projects" asp-route-id="@task.Project.Id" asp-action="Details">
+                            @Html.DisplayFor(taskItem => task.Project.Name)
+                        </a>
+                            <br>
+                        }
+                    </nobr>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
             }
 
         </tbody>

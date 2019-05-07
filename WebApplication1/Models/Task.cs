@@ -21,5 +21,7 @@ namespace WebApplication1.Models
 
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+
+        public bool Delete { get; set; }
     }
 }
