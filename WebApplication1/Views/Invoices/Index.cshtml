@@ -15,7 +15,7 @@
     <a asp-action="Create">Добавить инвойс</a>
 </p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th style="width:10%;">
@@ -49,7 +49,9 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Project.Name)
+                    <a asp-controller="Projects" asp-route-id="@item.Project.Id" asp-action="Details">
+                        @Html.DisplayFor(modelItem => item.Project.Name)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ClientName)

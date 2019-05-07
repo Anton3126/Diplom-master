@@ -17,6 +17,7 @@ namespace WebApplication1.ViewModels
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateImployment { get; set; }
+        public int? Percent { get; set; }
 
         public List<IdentityRole> AllRoles { get; set; }
         public IList<string> UserRoles { get; set; }

@@ -18,8 +18,8 @@ namespace WebApplication1.Controllers
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
         private readonly List<string> posts = new List<string> { "Разработчик", "Агент", "Партнер" };
-        UserManager<User> _userManager;
-        RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SchoolContext _context;
 
         public UsersController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SchoolContext context )
@@ -70,6 +70,7 @@ namespace WebApplication1.Controllers
             users = users.Where(p => p.Delete == true);
             users = users.Include(p => p.Firm);
             users = users.Include(p => p.Wallets);
+            users = users.Include(p => p.Tasks);
             var userList = users.ToList();
             foreach (User user in userList.ToList())
             {
@@ -137,9 +138,8 @@ namespace WebApplication1.Controllers
             {
                 model.DateImployment = DateTime.Now;
                 User user = new User { Email = model.Email, UserName = model.UserName, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
-                    MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = model.DateImployment, Delete = false };
+                    MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = DateTime.Now, Delete = false, Percent = model.Percent};
                 var result = await _userManager.CreateAsync(user, model.Password);
-                //await _userManager.AddToRoleAsync(user, "implementator");
                 await _userManager.AddToRolesAsync(user, roles);
                 await _context.SaveChangesAsync();
                 Wallet wallet = new Wallet { Balance = 0, Currency = model.Currency, UserId = user.Id, WalletName = user.FirstName + " " + user.LastName + " " + model.Currency };
@@ -187,7 +187,8 @@ namespace WebApplication1.Controllers
                 LastName = user.LastName,
                 DateImployment = user.DateImployment,
                 UserRoles = userRoles,
-                AllRoles = allRoles
+                AllRoles = allRoles,
+                Percent = user.Percent
             };
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
@@ -212,6 +213,7 @@ namespace WebApplication1.Controllers
                     user.MiddleName = model.MiddleName;
                     user.LastName = model.LastName;
                     user.DateImployment = model.DateImployment;
+                    user.Percent = model.Percent;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)

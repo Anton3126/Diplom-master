@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebApplication1</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -32,14 +31,14 @@
                 @if (User.IsInRole("Админ"))
                 {
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Firms" asp-action="Index">Фирмы</a></li>
-                        <li><a asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a></li>
-                        <li><a asp-area="" asp-controller="ProjectTasks" asp-action="Index">Задачи</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Сотрудники</a></li>
-                        <li><a asp-area="" asp-controller="Wallets" asp-action="Index">Кошельки</a></li>
-                        <li><a asp-area="" asp-controller="Transactions" asp-action="Index">Транзакции</a></li>
-                        <li><a asp-area="" asp-controller="Invoices" asp-action="Index">Инвойсы</a></li>
-                        <li><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Firms" asp-action="Index">Фирмы</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="ProjectTasks" asp-action="Index">Задачи</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Users" asp-action="Index">Сотрудники</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Wallets" asp-action="Index">Кошельки</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Transactions" asp-action="Index">Транзакции</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Invoices" asp-action="Index">Инвойсы</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
                     </ul>
                 }
                 @if (User.IsInRole("Разработчик"))
@@ -90,10 +89,8 @@
                 </div>
             </div>
         </div>
-</nav>
-
+    </nav>
     <partial name="_CookieConsentPartial" />
-
     <div class="container-fluid body-content">
         @RenderBody()
         <hr />
@@ -101,7 +98,6 @@
             <p></p>
         </footer>
     </div>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -122,7 +118,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

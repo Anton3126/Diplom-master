@@ -13,7 +13,7 @@
 
     <a asp-action="Create">Добавить сотрудника</a>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th style="width:7%;">
@@ -52,6 +52,9 @@
                 <th style="width:7%;">
                     Проекты
                 </th>
+                <th style="width:7%;">
+                    Процент
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -85,9 +88,9 @@
                     <nobr>
                         @foreach (var wallet in item.Wallets)
                         {
-                        <a asp-controller="Wallets" asp-route-id="@wallet.WalletID" asp-action="Details">
-                            @Html.DisplayFor(walletItem => wallet.WalletName)
-                        </a>
+                            <a asp-controller="Wallets" asp-route-id="@wallet.WalletID" asp-action="Details">
+                                @Html.DisplayFor(walletItem => wallet.WalletName)
+                            </a>
                             <br>
                         }
                     </nobr>
@@ -116,9 +119,9 @@
                     <nobr>
                         @foreach (var task in item.Tasks)
                         {
-                        <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
-                            @Html.DisplayFor(taskItem => task.Name)
-                        </a>
+                            <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
+                                @Html.DisplayFor(taskItem => task.Name)
+                            </a>
                             <br>
                         }
                     </nobr>
@@ -129,17 +132,28 @@
                         @foreach (var task in item.Tasks)
                         {
 
-                        <a asp-controller="Projects" asp-route-id="@task.Project.Id" asp-action="Details">
-                            @Html.DisplayFor(taskItem => task.Project.Name)
-                        </a>
+                            <a asp-controller="Projects" asp-route-id="@task.Project.Id" asp-action="Details">
+                                @Html.DisplayFor(taskItem => task.Project.Name)
+                            </a>
                             <br>
                         }
                     </nobr>
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    @Html.DisplayFor(modelItem => item.Percent)
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Действия
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a asp-action="Edit" asp-route-id="@item.Id">Изменить</a></li>
+                            <li><a asp-action="Details" asp-route-id="@item.Id">Детали</a></li>
+                            <li><a asp-action="Delete" asp-route-id="@item.Id">Удалить</a></li>
+                            <li><a asp-controller="Roles" asp-action="Edit" asp-route-userid="@item.Id">Роли</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
             }

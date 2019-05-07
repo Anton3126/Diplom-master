@@ -60,7 +60,15 @@
         </dl>
     </div>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.InvoiceID">Изменить</a> |
-        <a asp-action="Index">Назад</a>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Действия
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a asp-action="Edit" asp-route-id="@Model.InvoiceID">Изменить</a></li>
+                <li><a asp-action="Delete" asp-route-id="@Model.InvoiceID">Удалить</a></li>
+            </ul>
+            |  <a asp-action="Index">Список инвойсов</a>
+        </div>
     </div>
 </div>

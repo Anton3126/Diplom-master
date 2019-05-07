@@ -69,7 +69,7 @@ namespace WebApplication1.Controllers
                 ChangeRoleViewModel model = new ChangeRoleViewModel
                 {
                     UserId = user.Id,
-                    UserEmail = user.Email,
+                    UserName = user.UserName,
                     UserRoles = userRoles,
                     AllRoles = allRoles
                 };

@@ -56,6 +56,12 @@
             <dd>
                 @Html.DisplayFor(model => model.DateImployment)
             </dd>
+            <dt>
+                Процент
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Percent)
+            </dd>
         </dl>
         <form asp-action="Delete">
             <input type="hidden" asp-for="Id" />

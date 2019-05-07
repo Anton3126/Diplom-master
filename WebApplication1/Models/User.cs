@@ -15,6 +15,7 @@ namespace WebApplication1.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateImployment { get; set; }
+        public int? Percent { get; set; }
 
         public Firm Firm { get; set; }
 

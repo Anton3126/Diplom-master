@@ -41,7 +41,18 @@
         </dl>
     </div>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.WalletID">Изменить</a> |
-        <a asp-action="Index">Назад</a>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Действия
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a asp-action="Edit" asp-route-id="@Model.WalletID">Изменить</a></li>
+                <li><a asp-action="Delete" asp-route-id="@Model.WalletID">Удалить</a></li>
+                <li><a asp-controller="Transactions" asp-route-id="@Model.WalletID" asp-action="Create">Перевод между кошельками</a></li>
+                <li><a asp-controller="Transactions" asp-route-id="@Model.WalletID" asp-action="CreateOneSideTransaction">Одиночный перевод</a></li>
+                <li><a asp-controller="Transactions" asp-route-id="@Model.WalletID" asp-action="IndexIndividual">Выписка</a></li>
+            </ul>
+                |  <a asp-action="Index">Список кошельков</a>
+        </div>
     </div>
 </div>

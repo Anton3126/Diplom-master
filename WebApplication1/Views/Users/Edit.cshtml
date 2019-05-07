@@ -37,6 +37,10 @@
                     <input type="number" asp-for="Year" class="form-control" />
                 </div>
                 <div class="form-group">
+                    <label asp-for="Percent" class="control-label">Процент</label>
+                    <input type="number" asp-for="Percent" class="form-control" />
+                </div>
+                <div class="form-group">
                     <label asp-for="FirmID" class="control-label">Фирма</label>
                     <select asp-for="FirmID" class="form-control" asp-items="ViewBag.Firms"></select>
                 </div>

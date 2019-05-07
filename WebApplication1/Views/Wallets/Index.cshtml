@@ -17,7 +17,7 @@
     <a asp-action="CreateWalletFirm">Добавить кошелек фирмы</a>
 </p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th style="width:20%;">
@@ -44,10 +44,14 @@
 
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletName)
+                        <a asp-controller="Wallets" asp-route-id="@item.WalletID" asp-action="Details">
+                            @Html.DisplayFor(modelItem => item.WalletName)
+                        </a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                        <a asp-controller="Firms" asp-route-id="@item.Firm.FirmID" asp-action="Details">
+                            @Html.DisplayFor(modelItem => item.Firm.FirmName)
+                        </a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Currency)
@@ -60,14 +64,14 @@
                                 <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Действия
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a><br>
-                                    <a asp-action="Details" asp-route-id="@item.WalletID">Детали</a><br>
-                                    <a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a><br>
-                                    <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a><br>
-                                    <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="CreateOneSideTransaction">Одиночный перевод</a><br>
-                                    <a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a>
-                                </div>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a asp-action="Edit" asp-route-id="@item.WalletID">Изменить</a></li>
+                                    <li><a asp-action="Details" asp-route-id="@item.WalletID">Детали</a></li>
+                                    <li><a asp-action="Delete" asp-route-id="@item.WalletID">Удалить</a></li>
+                                    <li><a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="Create">Перевод между кошельками</a></li>
+                                    <li><a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="CreateOneSideTransaction">Одиночный перевод</a></li>
+                                    <li><a asp-controller="Transactions" asp-route-id="@item.WalletID" asp-action="IndexIndividual">Выписка</a></li>
+                                </ul>
                             </div>
                     </td>
                 </tr>
@@ -109,11 +113,15 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletName)
+                        <a asp-controller="Wallets" asp-route-id="@item.WalletID" asp-action="Details">
+                            @Html.DisplayFor(modelItem => item.WalletName)
+                        </a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User.FirstName)
-                        @Html.DisplayFor(modelItem => item.User.LastName)
+                        <a asp-controller="Users" asp-route-id="@item.User.Id" asp-action="Details">
+                            @Html.DisplayFor(modelItem => item.User.FirstName)
+                            @Html.DisplayFor(modelItem => item.User.LastName)
+                        </a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Currency)
@@ -171,7 +179,9 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WalletName)
+                        <a asp-controller="Wallets" asp-route-id="@item.WalletID" asp-action="Details">
+                            @Html.DisplayFor(modelItem => item.WalletName)
+                        </a>
                     </td>
                     <td>
                     </td>

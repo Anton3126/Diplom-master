@@ -14,7 +14,7 @@
     <p>
         <a asp-action="Create">Добавить фирму</a>
     </p>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th style="width:14%;">
@@ -40,7 +40,9 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirmName)
+                        <a asp-controller="Firms" asp-route-id="@item.FirmID" asp-action="Details">
+                            @Html.DisplayFor(modelItem => item.FirmName)
+                        </a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirmAddress)
@@ -48,7 +50,9 @@
                     <th>
                         @foreach (var wallet in item.Wallets)
                         {
-                            @Html.DisplayFor(walletItem => wallet.WalletName)
+                            <a asp-controller="Wallets" asp-route-id="@wallet.WalletID" asp-action="Details">
+                                @Html.DisplayFor(walletItem => wallet.WalletName)
+                            </a>
                             <br>
                         }
                     </th>

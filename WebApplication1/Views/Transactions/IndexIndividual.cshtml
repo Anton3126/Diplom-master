@@ -8,13 +8,13 @@
     <a asp-action="Index">Все транзакции</a>
 </p>
 <p>
-    <a asp-action="Create" asp-route-id=1>Перевод между кошельками</a>
+    <a asp-action="Create" asp-route-id=@ViewData["WalletID"]>Перевод между кошельками</a>
 </p>
 <p>
-    <a asp-action="CreateOneSideTransaction" asp-route-id=1>Одиночный перевод</a>
+    <a asp-action="CreateOneSideTransaction" asp-route-id=@ViewData["WalletID"]>Одиночный перевод</a>
 </p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th style="width:4%;">

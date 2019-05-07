@@ -42,16 +42,19 @@
                     <select asp-for="Currency" class="form-control" asp-items="ViewBag.Curryncies"></select>
                 </div>
                 <div class="form-group">
+                    <label asp-for="Percent" class="control-label">Процент</label>
+                    <input type="number" asp-for="Percent" class="form-control" />
+                </div>
+                <div class="form-group">
                     <label asp-for="Password" class="control-label">Пароль</label>
                     <input type="text" asp-for="Password" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Роли</label><br/>
-                       @foreach (IdentityRole role in Model.AllRoles)
-                        {
-                        <input type="checkbox" style="width:20px;height:20px;" name="roles" value="@role.Name"
-                               /><font size="4">@role.Name</font> <br />
-                        }
+                    <label class="control-label">Роли</label><br />
+                    @foreach (IdentityRole role in Model.AllRoles)
+                    {
+                        <input type="checkbox" style="width:20px;height:20px;" name="roles" value="@role.Name" /><font size="4">@role.Name</font> <br />
+                    }
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Добавить" class="btn btn-default" />

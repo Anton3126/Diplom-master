@@ -11,38 +11,47 @@
     </tr>
 </table>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Никнейм
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Имя
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Отчество
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Фамилия
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Год рождения
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Дата регистрации
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Фирма
             </th>
             <th style="width:12%;">
                 Название кошелька
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Валюта
             </th>
-            <th style="width:8%;">
+            <th style="width:7%;">
                 Баланс
+            </th>
+            <th style="width:7%;">
+                Задачи
+            </th>
+            <th style="width:7%;">
+                Проекты
+            </th>
+            <th style="width:7%;">
+                Процент
             </th>
         </tr>
     </thead>
@@ -95,6 +104,33 @@
                         <br>
                     }
                 </nobr></td>
+                <td>
+                    <nobr>
+                        @foreach (var task in item.Tasks)
+                        {
+                            <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
+                                @Html.DisplayFor(taskItem => task.Name)
+                            </a>
+                            <br>
+                        }
+                    </nobr>
+
+                </td>
+                <td>
+                    <nobr>
+                        @foreach (var task in item.Tasks)
+                        {
+
+                            <a asp-controller="Projects" asp-route-id="@task.Project.Id" asp-action="Details">
+                                @Html.DisplayFor(taskItem => task.Project.Name)
+                            </a>
+                            <br>
+                        }
+                    </nobr>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Percent)
+                </td>
                 <td>
                     <form asp-action="Undelete" asp-route-id="@item.Id" method="post">
                         <button type="submit" class="btn btn-success">

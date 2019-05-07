@@ -37,8 +37,17 @@
         </dl>
     </div>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a> |
-        <a asp-action="Index">Назад</a>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Действия
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a></li>
+                <li><a asp-action="Delete" asp-route-id="@Model.Id">Удалить</a></li>
+                <li><a asp-controller="ProjectTasks" asp-action="Index" asp-route-project="@Model.Id">Задачи проекта</a></li>
+            </ul>
+            |  <a asp-action="Index">Список проектов</a>
+        </div>
     </div>
 
 </div>

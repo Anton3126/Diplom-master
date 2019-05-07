@@ -35,6 +35,7 @@ namespace WebApplication1.Controllers
         {
             Wallet walletIndividual = _context.Wallet.Find(id);
             ViewData["WalletIndividual"] = walletIndividual.WalletName;
+            ViewData["WalletID"] = walletIndividual.WalletID;
             IQueryable<Transaction> transactions = _context.Transaction;
             transactions = transactions.Where(t => t.WalletID == id);
             transactions = transactions.Include(u => u.Wallet.User);

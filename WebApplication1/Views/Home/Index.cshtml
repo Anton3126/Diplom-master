@@ -1,12 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Identity
+@model WebApplication1.ViewModels.ChangeRoleViewModel
+@{
+    ViewData["Title"] = "Домашняя страница";
 }
-
 <div class="container">
-
     @if (User.Identity.IsAuthenticated)
     {
-        @User.Identity.Name
+        <h3>Логин: @User.Identity.Name</h3>
+        <h4>Роли:</h4> 
+        @foreach (var Role in Model.UserRoles)
+        {
+            <h4>@Role</h4> 
+        }
+        
     }
     else
     {
