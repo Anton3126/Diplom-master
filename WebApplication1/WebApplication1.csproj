@@ -10,4 +10,10 @@
     <PackageReference Include="Twitter.Bootstrap" Version="3.0.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\SotrudnikDetails\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -12,7 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Админ")]
+    [Authorize(Roles = "admin")]
     public class WalletsController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };

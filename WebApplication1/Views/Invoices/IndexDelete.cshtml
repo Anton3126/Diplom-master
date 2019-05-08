@@ -38,6 +38,9 @@
             <th style="width:10%;">
                 Комментарий
             </th>
+            <th style="width:10%;">
+                Оплата
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -67,6 +70,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pay)
                 </td>
                 <td>
                     <form asp-action="Undelete" asp-route-id="@item.InvoiceID" method="post">

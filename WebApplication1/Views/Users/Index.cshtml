@@ -16,44 +16,47 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Никнейм
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Имя
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Отчество
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Фамилия
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Год рождения
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Дата регистрации
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Фирма
                 </th>
                 <th style="width:12%;">
                     Название кошелька
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Валюта
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Баланс
                 </th>
-                <th style="width:7%;">
-                    Задачи
-                </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
                     Проекты
                 </th>
-                <th style="width:7%;">
+                <th style="width:6%;">
+                    Задачи
+                </th>
+                <th style="width:6%;">
                     Процент
+                </th>
+                <th style="width:6%;">
+                    Должность
                 </th>
             </tr>
         </thead>
@@ -62,7 +65,9 @@
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
@@ -119,18 +124,6 @@
                     <nobr>
                         @foreach (var task in item.Tasks)
                         {
-                            <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
-                                @Html.DisplayFor(taskItem => task.Name)
-                            </a>
-                            <br>
-                        }
-                    </nobr>
-
-                </td>
-                <td>
-                    <nobr>
-                        @foreach (var task in item.Tasks)
-                        {
 
                             <a asp-controller="Projects" asp-route-id="@task.Project.Id" asp-action="Details">
                                 @Html.DisplayFor(taskItem => task.Project.Name)
@@ -140,18 +133,33 @@
                     </nobr>
                 </td>
                 <td>
+                    <nobr>
+                        @foreach (var task in item.Tasks)
+                        {
+                            <a asp-controller="Tasks" asp-route-id="@task.Id" asp-action="Details">
+                                @Html.DisplayFor(taskItem => task.Name)
+                            </a>
+                            <br>
+                        }
+                    </nobr>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Percent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Post)
                 </td>
                 <td>
                     <div class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Действия
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                             <li><a asp-action="Edit" asp-route-id="@item.Id">Изменить</a></li>
                             <li><a asp-action="Details" asp-route-id="@item.Id">Детали</a></li>
                             <li><a asp-action="Delete" asp-route-id="@item.Id">Удалить</a></li>
                             <li><a asp-controller="Roles" asp-action="Edit" asp-route-userid="@item.Id">Роли</a></li>
+                            <li><a asp-action="ChangePassword" asp-route-id="@item.Id">Сменить пароль</a></li>
                         </ul>
                     </div>
                 </td>

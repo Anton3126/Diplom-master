@@ -14,28 +14,9 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SchoolContext _context;
-
-        public HomeController(UserManager<User> userManager, SchoolContext context)
+        public IActionResult Index()
         {
-            _userManager = userManager;
-            _context = context;
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = _context.Users.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                var userRoles = await _userManager.GetRolesAsync(user);
-                ChangeRoleViewModel model = new ChangeRoleViewModel
-                {
-                    UserRoles = userRoles
-                };
-                return View(model);
-            }
-            else return View();
+            return View();
         }
     }
 }

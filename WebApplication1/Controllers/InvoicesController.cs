@@ -11,9 +11,10 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Админ")]
+    [Authorize(Roles = "admin")]
     public class InvoicesController : Controller
     {
+        private readonly List<string> pay = new List<string> { "Неоплачен", "Оплачен" };
         private readonly SchoolContext _context;
 
         public InvoicesController(SchoolContext context)
@@ -61,6 +62,7 @@ namespace WebApplication1.Controllers
         public IActionResult Create()
         {
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Name");
+            ViewBag.Pay = new SelectList(pay);
             return View();
         }
 
@@ -79,6 +81,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Name", invoice.ProjectID);
+            ViewBag.Pay = new SelectList(pay);
             return View(invoice);
         }
 
@@ -96,6 +99,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Name", invoice.ProjectID);
+            ViewBag.Pay = new SelectList(pay);
             return View(invoice);
         }
 
@@ -132,6 +136,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Id", invoice.ProjectID);
+            ViewBag.Pay = new SelectList(pay);
             return View(invoice);
         }
 

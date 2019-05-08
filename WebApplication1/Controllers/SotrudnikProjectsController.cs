@@ -12,7 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Разработчик")]
+    [Authorize(Roles = "user")]
     public class SotrudnikProjectsController : Controller
     {
         List<String> statusList = new List<string>() { "Все", "Активный", "Завершенный" };

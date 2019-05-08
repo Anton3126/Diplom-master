@@ -13,7 +13,7 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Разработчик")]
+    [Authorize(Roles = "user")]
     public class SotrudnikProjectTasksController : Controller
     {
         private readonly SchoolContext _context;

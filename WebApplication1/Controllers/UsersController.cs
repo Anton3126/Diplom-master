@@ -10,14 +10,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.DAL;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Админ")]
+    [Authorize(Roles = "user, admin")]
     public class UsersController : Controller
     {
         private readonly List<string> curryncies = new List<string> { "Рубль", "Доллар", "Евро" };
-        private readonly List<string> posts = new List<string> { "Разработчик", "Агент", "Партнер" };
+        private readonly List<string> posts = new List<string> { "Программист", "Агент", "Партнер" };
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SchoolContext _context;
@@ -29,6 +30,7 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             IQueryable<User> users = _userManager.Users;
@@ -64,6 +66,7 @@ namespace WebApplication1.Controllers
             return View(userList);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult IndexDelete()
         {
             IQueryable<User> users = _userManager.Users;
@@ -99,7 +102,7 @@ namespace WebApplication1.Controllers
             return View(userList);
         }
 
-        // GET: Users/Details/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -114,9 +117,29 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
             user.Firm = _context.Firm.Find(user.FirmID);
+            var wallets = _context.Wallet.ToList();
+            foreach (Wallet wallet in wallets.ToList())
+            {
+                if (wallet.Delete == false & wallet.UserId != id)
+                {
+                    wallets.Remove(wallet);
+                }
+            }
+            user.Wallets = wallets;
+            var tasks = _context.Tasks.ToList();
+            foreach (Models.Task task in tasks.ToList())
+            {
+                task.Project = _context.Projects.Find(task.ProjectId);
+                if (task.Delete == false & task.UserId != id)
+                {
+                    tasks.Remove(task);
+                }
+            }
+            user.Tasks = tasks;
             return View(user);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             var allRoles = _roleManager.Roles.ToList();
@@ -131,6 +154,7 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model, List<string> roles)
         {
@@ -138,7 +162,7 @@ namespace WebApplication1.Controllers
             {
                 model.DateImployment = DateTime.Now;
                 User user = new User { Email = model.Email, UserName = model.UserName, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
-                    MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = DateTime.Now, Delete = false, Percent = model.Percent};
+                    MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = DateTime.Now, Delete = false, Percent = model.Percent, Post = model.Post};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddToRolesAsync(user, roles);
                 await _context.SaveChangesAsync();
@@ -165,12 +189,7 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
-        public ViewResult SomeMethod()
-        {
-            ViewData["Head"] = "Привет мир!";
-            return View("Create");
-        }
-
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -188,15 +207,17 @@ namespace WebApplication1.Controllers
                 DateImployment = user.DateImployment,
                 UserRoles = userRoles,
                 AllRoles = allRoles,
-                Percent = user.Percent
+                Percent = user.Percent,
+                Post = user.Post
             };
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
             ViewBag.Firms = new SelectList(firms, "FirmID", "FirmName", model.FirmID);
             ViewBag.Post = new SelectList(posts);
             return View(model);
-        }   
+        }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditUserViewModel model, List<string> roles)
         {
@@ -214,6 +235,7 @@ namespace WebApplication1.Controllers
                     user.LastName = model.LastName;
                     user.DateImployment = model.DateImployment;
                     user.Percent = model.Percent;
+                    user.Post = model.Post;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
@@ -236,6 +258,7 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -250,10 +273,30 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
+            var wallets = _context.Wallet.ToList();
+            foreach (Wallet wallet in wallets.ToList())
+            {
+                if (wallet.Delete == false & wallet.UserId != id)
+                {
+                    wallets.Remove(wallet);
+                }
+            }
+            user.Wallets = wallets;
+            var tasks = _context.Tasks.ToList();
+            foreach (Models.Task task in tasks.ToList())
+            {
+                task.Project = _context.Projects.Find(task.ProjectId);
+                if (task.Delete == false & task.UserId != id)
+                {
+                    tasks.Remove(task);
+                }
+            }
+            user.Tasks = tasks;
 
             return View(user);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -267,6 +310,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Undelete(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -276,6 +320,56 @@ namespace WebApplication1.Controllers
                 IdentityResult result = await _userManager.UpdateAsync(user);
             }
             return RedirectToAction("IndexDelete");
+        }
+
+        [Authorize(Roles = "user, admin")]
+        public async Task<IActionResult> ChangePassword(string id)
+        {
+            User user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ChangePasswordViewModel model = new ChangePasswordViewModel { Id = user.Id, UserName = user.UserName };
+            return View(model);
+        }
+
+        [Authorize(Roles = "user, admin")]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _userManager.FindByIdAsync(model.Id);
+                if (user != null)
+                {
+                    var _passwordValidator =
+                        HttpContext.RequestServices.GetService(typeof(IPasswordValidator<User>)) as IPasswordValidator<User>;
+                    var _passwordHasher =
+                        HttpContext.RequestServices.GetService(typeof(IPasswordHasher<User>)) as IPasswordHasher<User>;
+
+                    IdentityResult result =
+                        await _passwordValidator.ValidateAsync(_userManager, user, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        user.PasswordHash = _passwordHasher.HashPassword(user, model.NewPassword);
+                        await _userManager.UpdateAsync(user);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                }
+            }
+            return View(model);
         }
     }
 }

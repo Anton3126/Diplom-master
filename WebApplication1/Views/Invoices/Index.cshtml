@@ -42,44 +42,50 @@
             <th style="width:10%;">
                 Комментарий
             </th>
+            <th style="width:10%;">
+                Оплата
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-controller="Projects" asp-route-id="@item.Project.Id" asp-action="Details">
-                        @Html.DisplayFor(modelItem => item.Project.Name)
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClientName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AmountWait)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AmountReal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DatePaymentWait)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DatePaymentReal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.InvoiceID">Изменить</a> |
-                    <a asp-action="Details" asp-route-id="@item.InvoiceID">Детали</a> |
-                    <a asp-action="Delete" asp-route-id="@item.InvoiceID">Удалить</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a asp-controller="Projects" asp-route-id="@item.Project.Id" asp-action="Details">
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountWait)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountReal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePaymentWait)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePaymentReal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pay)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InvoiceID">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.InvoiceID">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.InvoiceID">Удалить</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

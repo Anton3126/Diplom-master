@@ -1,10 +1,10 @@
 ﻿@model WebApplication1.Models.User
 @{
-    ViewData["Title"] = "Детали сотрудника";
+    ViewData["Title"] = "Личная информация";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    <h2>Детали сотрудника</h2>
+    <h2>Личная информация</h2>
     <div>
         <dl class="dl-horizontal">
             <dt>
@@ -62,12 +62,6 @@
                 @Html.DisplayFor(model => model.Percent)
             </dd>
             <dt>
-                Должность
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Post)
-            </dd>
-            <dt>
                 Кошелек, Валюта,<br>
                 Баланс
             </dt>
@@ -94,17 +88,6 @@
         </dl>
     </div>
     <div>
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Действия
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a></li>
-                <li><a asp-action="Delete" asp-route-id="@Model.Id">Удалить</a></li>
-                <li><a asp-controller="Roles" asp-action="Edit" asp-route-userid="@Model.Id">Роли</a></li>
-                <li><a asp-action="ChangePassword" asp-route-id="@Model.Id">Сменить пароль</a></li>
-            </ul>
-            |  <a asp-action="Index">Список сотрудников</a>
-        </div>
+        <a asp-controller="Home" asp-action="Index">Главная</a>
     </div>
 </div>

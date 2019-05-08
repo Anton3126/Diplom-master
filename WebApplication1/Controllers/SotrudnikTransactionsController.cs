@@ -12,7 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Разработчик")]
+    [Authorize(Roles = "user")]
     public class SotrudnikTransactionsController : Controller
     {
         private readonly SchoolContext _context;

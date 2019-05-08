@@ -15,6 +15,7 @@ namespace WebApplication1.Models
         public DateTime? DatePaymentWait { get; set; }
         public DateTime? DatePaymentReal { get; set; }
         public string Description { get; set; }
+        public string Pay { get; set; }
 
         public int ProjectID { get; set; }
         public Project Project { get; set; }

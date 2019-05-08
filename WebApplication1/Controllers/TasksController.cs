@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Identity.Controllers
 {
-    [Authorize(Roles = "Админ")]
+    [Authorize(Roles = "admin")]
     public class TasksController : Controller
     {
         private readonly SchoolContext _context;

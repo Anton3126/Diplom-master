@@ -29,6 +29,7 @@ namespace WebApplication1.DAL
                 .Property(t => t.Hours)
                 .HasDefaultValue(0);
 
+            //Таблица Firms
             modelBuilder.Entity<Firm>().HasData(
             new Firm[]
             {
@@ -36,6 +37,8 @@ namespace WebApplication1.DAL
                  new Firm { FirmID = 2, FirmName = "ООО Волна", FirmAddress = "Казань, Пушкина 43"},
                  new Firm { FirmID = 3, FirmName = "ИП Петров", FirmAddress = "Казань, Бызова 32"}
             });
+
+            //Таблица Wallets
             modelBuilder.Entity<Wallet>().HasData(
             new Wallet[]
             {
@@ -52,6 +55,7 @@ namespace WebApplication1.DAL
                  new Wallet { WalletID = 11, WalletName = "ИП Петров Доллар", FirmID = 3, Currency = "Доллар"},
                  new Wallet { WalletID = 12, WalletName = "ИП Петров Евро", FirmID = 3, Currency = "Евро"}
             });
+
             //Таблица Projects
             modelBuilder.Entity<Project>().HasData(
            new Project[]
@@ -73,6 +77,15 @@ namespace WebApplication1.DAL
                 new Models.Task { Id=1, Name="Задача 1", Description="Спроектировать облачное хранилище данных", Date = new DateTime(2010, 2, 10, 10, 40, 52), ProjectId = 1},
                 new Models.Task { Id=2, Name="Задача 2", Description="Разработать систему авторизации", Date = new DateTime(2010, 12, 10, 17, 30, 52), ProjectId = 2},
                 new Models.Task { Id=3, Name="Задача 3", Description="Сверстать сайт", Date = new DateTime(2009, 12, 13, 10, 37, 52), ProjectId = 3}
+           });
+
+            //Таблица Invoices
+            modelBuilder.Entity<Invoice>().HasData(
+           new Invoice[]
+           {
+                new Invoice { InvoiceID=1, ClientName="Игорь Щербаков", DateCreate = new DateTime(2018, 10, 3, 10, 40, 52), AmountWait = 50000, AmountReal = 60000, DatePaymentWait =  new DateTime(2019, 1, 15, 10, 20, 32), DatePaymentReal = new DateTime(2019, 2, 2, 10, 1, 31), ProjectID = 1, Pay = "Оплачен"},
+                new Invoice { InvoiceID=2, ClientName="Ян Кузнецов",  DateCreate = DateTime.Now, AmountWait = 90000, AmountReal = 95000, DatePaymentWait = new DateTime(2019, 2, 10, 10, 40, 52), ProjectID = 2, Pay = "Неоплачен"},
+                new Invoice { InvoiceID=3, ClientName="Елисей Носов", DateCreate = DateTime.Now, AmountWait = 40000, AmountReal = 40000, DatePaymentWait = new DateTime(2019, 2, 10, 10, 40, 52), ProjectID = 3, Pay = "Неоплачен"}
            });
         }
 

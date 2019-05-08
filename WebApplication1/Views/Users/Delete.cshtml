@@ -62,6 +62,36 @@
             <dd>
                 @Html.DisplayFor(model => model.Percent)
             </dd>
+            <dt>
+                Должность
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Post)
+            </dd>
+            <dt>
+                Кошелек, Валюта,<br>
+                Баланс
+            </dt>
+            <dd>
+                @foreach (var wallet in Model.Wallets)
+                {
+                    @Html.DisplayFor(walletItem => wallet.WalletName)<a>, </a>
+                    @Html.DisplayFor(walletItem => wallet.Currency)<a>, </a>
+                    @Html.DisplayFor(walletItem => wallet.Balance)
+                    <br>
+                }
+            </dd>
+            <dt>
+                Проект, Задача
+            </dt>
+            <dd>
+                @foreach (var task in Model.Tasks)
+                {
+                    @Html.DisplayFor(taskItem => task.Project.Name)<a>, </a>
+                    @Html.DisplayFor(taskItem => task.Name)
+                    <br>
+                }
+            </dd>
         </dl>
         <form asp-action="Delete">
             <input type="hidden" asp-for="Id" />

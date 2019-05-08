@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Админ")]
+    [Authorize(Roles = "admin")]
     public class ProjectsController : Controller
     {
         List<String> statusList = new List<string>() {"Все", "Активный", "Завершенный" };

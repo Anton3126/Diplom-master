@@ -28,7 +28,7 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Главная</a>
             </div>
             <div class="navbar-collapse collapse">
-                @if (User.IsInRole("Админ"))
+                @if (User.IsInRole("admin"))
                 {
                     <ul class="nav navbar-nav">
                         <li class="nav-item"><a asp-area="" asp-controller="Firms" asp-action="Index">Фирмы</a></li>
@@ -41,7 +41,7 @@
                         <li class="nav-item"><a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a></li>
                     </ul>
                 }
-                @if (User.IsInRole("Разработчик"))
+                @if (User.IsInRole("user"))
                 {
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="SotrudnikTransactions" asp-action="Index">Транзакции</a></li>
