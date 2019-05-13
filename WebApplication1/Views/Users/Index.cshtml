@@ -20,19 +20,22 @@
                     Никнейм
                 </th>
                 <th style="width:6%;">
-                    Имя
-                </th>
-                <th style="width:6%;">
-                    Отчество
-                </th>
-                <th style="width:6%;">
-                    Фамилия
+                    ФИО
                 </th>
                 <th style="width:6%;">
                     Год рождения
                 </th>
                 <th style="width:6%;">
                     Дата регистрации
+                </th>
+                <th style="width:6%;">
+                    Процент
+                </th>
+                <th style="width:6%;">
+                    Должность
+                </th>
+                <th style="width:12%;">
+                    Номер телефона
                 </th>
                 <th style="width:6%;">
                     Фирма
@@ -52,12 +55,6 @@
                 <th style="width:6%;">
                     Задачи
                 </th>
-                <th style="width:6%;">
-                    Процент
-                </th>
-                <th style="width:6%;">
-                    Должность
-                </th>
             </tr>
         </thead>
         <tbody>
@@ -70,19 +67,24 @@
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)<br>
+                    @Html.DisplayFor(modelItem => item.FirstName)<br>
                     @Html.DisplayFor(modelItem => item.MiddleName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Year)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateImployment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Percent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Post)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
                     <a asp-controller="Firms" asp-route-id="@item.FirmID" asp-action="Details">
@@ -144,12 +146,6 @@
                     </nobr>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Percent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Post)
-                </td>
-                <td>
                     <div class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Действия
@@ -158,6 +154,7 @@
                             <li><a asp-action="Edit" asp-route-id="@item.Id">Изменить</a></li>
                             <li><a asp-action="Details" asp-route-id="@item.Id">Детали</a></li>
                             <li><a asp-action="Delete" asp-route-id="@item.Id">Удалить</a></li>
+                            <li><a asp-controller="Wallets" asp-action="CreateWalletUser" asp-route-userid="@item.Id">Добавить кошелек</a></li>
                             <li><a asp-controller="Roles" asp-action="Edit" asp-route-userid="@item.Id">Роли</a></li>
                             <li><a asp-action="ChangePassword" asp-route-id="@item.Id">Сменить пароль</a></li>
                         </ul>

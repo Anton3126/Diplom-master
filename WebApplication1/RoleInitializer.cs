@@ -43,7 +43,8 @@ namespace WebApplication1
                     FirstName = "Юрий",
                     MiddleName = "Сергеевич",
                     LastName = "Кнаев",
-                    Post = "Программист"
+                    Post = "Программист",
+                    PhoneNumber = "+7(999)-149-69-73"
                 };
                 IdentityResult result = await userManager.CreateAsync(user1, password);
                 if (result.Succeeded)
@@ -62,7 +63,8 @@ namespace WebApplication1
                     FirstName = "Илья",
                     MiddleName = "Александрович",
                     LastName = "Рыбаков",
-                    Post = "Программист"
+                    Post = "Программист",
+                    PhoneNumber = "+7(987)-730-71-72"
                 };
                 IdentityResult result = await userManager.CreateAsync(user2, password);
                 if (result.Succeeded)
@@ -82,7 +84,8 @@ namespace WebApplication1
                     FirstName = "Владислав",
                     MiddleName = "Олегович",
                     LastName = "Соколов",
-                    Post = "Программист"
+                    Post = "Программист",
+                    PhoneNumber = "+7(902)-321-11-51"
                 };
                 IdentityResult result = await userManager.CreateAsync(user3, password);
                 if (result.Succeeded)

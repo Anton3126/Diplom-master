@@ -162,7 +162,7 @@ namespace WebApplication1.Controllers
             {
                 model.DateImployment = DateTime.Now;
                 User user = new User { Email = model.Email, UserName = model.UserName, Year = model.Year, FirmID = model.FirmID,FirstName = model.FirstName,
-                    MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = DateTime.Now, Delete = false, Percent = model.Percent, Post = model.Post};
+                    MiddleName = model.MiddleName, LastName = model.LastName, DateImployment = DateTime.Now, Delete = false, Percent = model.Percent, Post = model.Post, PhoneNumber = model.PhoneNumber};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddToRolesAsync(user, roles);
                 await _context.SaveChangesAsync();
@@ -208,7 +208,8 @@ namespace WebApplication1.Controllers
                 UserRoles = userRoles,
                 AllRoles = allRoles,
                 Percent = user.Percent,
-                Post = user.Post
+                Post = user.Post,
+                PhoneNumber = user.PhoneNumber
             };
             IQueryable<Firm> firms = _context.Firm;
             firms = firms.Where(p => p.Delete == false);
@@ -236,6 +237,7 @@ namespace WebApplication1.Controllers
                     user.DateImployment = model.DateImployment;
                     user.Percent = model.Percent;
                     user.Post = model.Post;
+                    user.PhoneNumber = model.PhoneNumber;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)

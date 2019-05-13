@@ -20,6 +20,7 @@ namespace WebApplication1.ViewModels
         public string Currency { get; set; }
         public int? Percent { get; set; }
         public string Post { get; set; }
+        public string PhoneNumber { get; set; }
 
         public List<IdentityRole> AllRoles { get; set; }
         public IList<string> UserRoles { get; set; }

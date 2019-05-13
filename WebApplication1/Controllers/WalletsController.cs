@@ -97,11 +97,11 @@ namespace WebApplication1.Controllers
         }
 
 
-        public IActionResult CreateWalletUser()
+        public IActionResult CreateWalletUser(string id)
         {
             IQueryable<User> users = _context.Users;
             users = users.Where(p => p.Delete == false );
-            ViewBag.Users = new SelectList(users, "Id", "UserName");
+            ViewBag.Users = new SelectList(users, "Id", "UserName",id);
             ViewBag.Curryncies = new SelectList(curryncies);
             return View();
         }
